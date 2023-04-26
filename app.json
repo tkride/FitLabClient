@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "FitLabClient",
+    "slug": "FitLabClient",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
