@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "FitLabClient",
-    "slug": "FitLabClient",
+    "name": "trainning-log-client",
+    "slug": "trainning-log-client",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

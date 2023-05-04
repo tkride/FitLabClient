@@ -109,13 +109,17 @@ def reactNativeArchitectures() {
 }
 
 android {
+    project.ext.react = [
+        enableHermes: true,
+        bundleInDebug: true,
+    ]
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.fitlabclient"
+    namespace "com.trainninglogclient"
     defaultConfig {
-        applicationId "com.fitlabclient"
+        applicationId "com.trainninglogclient"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

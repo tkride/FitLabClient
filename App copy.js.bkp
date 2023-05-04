@@ -1,0 +1,43 @@
+import React, { useState } from 'react';
+import { View } from 'react-native';
+import LoginScreen from './screens/LoginScreen';
+import HomeScreen from './screens/HomeScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+export default function App() {
+  const Stack = createStackNavigator();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  const handleLogin = (data) => {
+    console.log('data:', data)
+    setUserData({ name: data.username, email: 'test@gmail.com'});
+    setLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+    setUserData(null);
+  };
+
+  console.log('userData: ', userData)
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {loggedIn ? (
+          <>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            // Agrega aquí el resto de tus pantallas
+          </>
+        ) : (
+          <Stack.Screen name="Login">
+            {props => <LoginScreen {...props} onLogin={handleLogin} />}
+          </Stack.Screen>
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
