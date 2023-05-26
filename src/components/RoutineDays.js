@@ -1,64 +1,82 @@
 // RoutineContent.js
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
-import { Card, List } from 'react-native-paper';
+import { Avatar, Card, List } from 'react-native-paper';
+import { nanoid } from 'nanoid'
 import { TableCustom } from './TableCustom';
-import { ThemeContext } from '../context/ThemeProvider';
-import { DataContext } from '../context/DataProvider';
+import { useTheme } from '../context/ThemeProvider';
+import { useData } from '../context/DataProvider';
 import { TouchableHighlight, TouchableOpacity } from 'react-native';
 import Draggable from 'react-native-draggable';
 import BackButton from './BackButton';
+import Config from '../config/Config';
+import { useTranslator } from '../context/TranslatorProvider';
 
 export default function RoutineDays({ navigation, routine }) {
-  const { styles } = useContext(ThemeContext);
-  const { routines } = useContext(DataContext);
+  const { styles } = useTheme();
+  const { language, translate } = useTranslator();
+  const { nanoid, routines } = useData();
+
   const [routineData, setRoutineData] = useState({});
-  const [selected, setSelected] = useState(null);
+  const [images, setImages] = useState({});
 
   useEffect(() => {
     const rData = routines.filter( r => r.name === routine)?.[0];
     setRoutineData(rData);
+    const daysImages = {};
+    rData?.days?.forEach(day => {
+      const loadedImages = day?.exercises?.forEach(exercise => {
+        if(!exercise) return;
+        if(daysImages[exercise.name]) return;
+        const fileName = exercise?.name?.toLowerCase().replace(/\s/g, '-') + Config.IMAGES.EXERCISE_STEP_1_FILE_APPEND;
+        const filePath = Config.REQUESTS.IMAGES_EXERCISE_STEPS + '/' + fileName;
+        daysImages[exercise.name] = { uri: filePath };
+      });
+    });
+
+    setImages(daysImages);
   }, []);
+
+  useEffect(() => {
+  }, [images, language])
 
   if (!routines) {
     return (
-        <Text style={styles.text}>Cargando...</Text>
+        <Text style={styles.text}>{`${translate('loading')}`}</Text>
     );
   }
 
-  const handleSelect = (selectedExercise) => {
-    setSelected(selectedExercise);
+  const handleSelect = (day) => {
+    navigation.navigate('Ejercicios', { routine: routineData.name, day });
   }
 
-  // console.log('ROUTINE CONTENT', routineData)
+  const calcDuration = (day) => {
+    let duration = 0;
+    day?.exercises?.forEach(exercise => {
+      duration += exercise.sets * ( (exercise.reps * 2) + exercise.restAlarm );
+    });
+    duration = parseFloat(duration / 60).toFixed(1);
+    return duration;
+  }
+
   return (
-    <View style={styles.view}>
-      <Text style={styles.title}>{routineData.name}</Text>
-      <ScrollView style={styles.scrollView}>
+    <View style={styles.view} shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true}>
+      {/* <Text style={styles.title}>{routineData.name}</Text> */}
+      <ScrollView style={{...styles.scrollView, height: '80%'}}>
         {routineData?.days?.map(day => (
-          <TouchableOpacity key={day.name} onPress={() => handleSelect(day.name)}>
+          <TouchableOpacity key={day.name + nanoid()} onPress={() => handleSelect(day)}>
             <Card style={[styles.card]}>
-              <Card.Title title={day.name} titleStyle={[styles.subtitle, {marginTop: 10}]}/>
-              <Card.Content>
-                <List.Section>
+              <Card.Content style={{marginBottom: 5}}>
+                <Text style={{...styles.title}}>{day.name}</Text>
+                <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-between'}}>
+                  <Text style={{...styles.textBig}}>{`${translate('exercises')}: ${day.exercises.length}`}</Text>
+                  <Text style={{...styles.textBig, marginLeft: 10}}>{`${translate('duration')}: ${calcDuration(day)} ${translate('minutes')}`}</Text>
+                </View>
+                <View style={{marginTop: 10}}>
                   {day?.exercises?.map(exercise => (
-                    <List.Item
-                      key={exercise.name}
-                      titleStyle={[styles.subtitle, { left: -10, flex: 1 }]}
-                      title={exercise.name}
-                      style={styles.text}
-                      descriptionStyle={[styles.text, {fontSize: 14}]}
-                      description={
-                        <View style={[{ flexDirection: 'row' }]}>
-                          {/* <Text style={[styles.subtitle, { flex:1 }]}>{exercise.name}</Text> */}
-                          <Text style={[styles.text, { flex: 1, left: -30 }]}>{`${exercise.sets}x${exercise.reps} @RIR:${exercise.rir ?? '0'}`}</Text>
-                          <Text style={[styles.text, { flex: 1, left: 60 }]}>{`REST: ${exercise.restAlarm}s`}</Text>
-                          {/*<Text style={[styles.text, { left: 30 }]}>{`RIR: ${exercise.rir ?? '0'}`}</Text>*/}
-                        </View>
-                      }
-                    />
+                      <Text key={exercise.name + nanoid()} style={{...styles.subtitle, fontSize: styles.textBig.fontSize }}>{exercise.name}</Text>
                   ))}
-                </List.Section>
+                </View>
               </Card.Content>
             </Card>
           </TouchableOpacity>
@@ -80,16 +98,3 @@ export default function RoutineDays({ navigation, routine }) {
       </Draggable>
  */
 
-const stylesCustom = StyleSheet.create({
-  backButton: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    height: 20,
-    width: 20,
-    margin: 5,
-    activeOpacity: 0.5,
-    underlayColor: 'transparent',
-    zIndex: 1,
-  },
-});

@@ -1,23 +1,22 @@
 
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View } from 'react-native';
-import HomeTabs from './screens/HomeTabs';
-import LoginScreen from './screens/LoginScreen';
-import UserScreen from './screens/UserScreen';
-import { ThemeProvider, ThemeContext } from './context/ThemeProvider';
+import HomeTabs from './Navigation/HomeTabs';
+import LoginScreen from './Screens/LoginScreen';
+import { ThemeProvider, useTheme } from './context/ThemeProvider';
 import { DataProvider, DataContext } from './context/DataProvider';
-import ThemeButton from './components/ThemeButton';
+import { SafeAreaView } from 'react-native';
+import { TranslatorProvider } from './context/TranslatorProvider';
 
 const Stack = createStackNavigator();
 
 const Navigator = ({ loggedIn, userData, routineData, onLogin, onLogout }) => {
-  const { styles, toggleTheme } = useContext(ThemeContext);
+  const { styles } = useTheme();
 
   return (
     <View style={styles.container}>
-      <ThemeButton onPress={ toggleTheme } />
       <NavigationContainer
         theme={{
           ...DefaultTheme,
@@ -31,26 +30,13 @@ const Navigator = ({ loggedIn, userData, routineData, onLogin, onLogout }) => {
       >
         <Stack.Navigator initialRouteName='HomeTabs'>
           {loggedIn ? (
-            <>
-              <Stack.Screen
-                name="HomeTabs"
-                // component={HomeTabs}
-                // initialParams={{user: userData, onLogout: onLogout}}
-                options={{ headerShown: false }}
-              >
-                { props => <HomeTabs {...props} user={userData} onLogout={onLogout} /> }
-              </Stack.Screen>
-              {/* <Stack.Screen
-                name="UserScreen"
-                component={UserScreen}
-                options={{ headerShown: false }}
-              /> */}
-            </>
-          ) : (
-            <Stack.Screen
-              name="Login"
-              options={{ headerShown: false }}
+            <Stack.Screen name="HomeTabs"
+              options={{ ...styles.navigatorBottom, headerShown: false }}
             >
+              { props => <HomeTabs {...props} user={userData} onLogout={onLogout} /> }
+            </Stack.Screen>
+          ) : (
+            <Stack.Screen name="Login" options={{ ...styles.navigatorBottom, }} >
               {props => <LoginScreen {...props} user={userData} onLogin={onLogin} />}
             </Stack.Screen>
           )}
@@ -63,13 +49,13 @@ const Navigator = ({ loggedIn, userData, routineData, onLogin, onLogout }) => {
 export default function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({name: 'Ruben', email: 'rubenprojectsoftware@gmail.com'});
   const [routineData, setRoutineData] = useState({});
 
   const handleLogin = (userData) => {
     console.log('Login successful!');
     console.log('User data:', userData);
-    setUserData({ name: userData.username, email: 'test@gmail.com'});
+    setUserData({ name: userData.username, email: 'rubenprojectsoftware@gmail.com'});
     setLoggedIn(true);
   };
 
@@ -80,16 +66,20 @@ export default function App() {
   };
 
   return (
-    <DataProvider>
-      <ThemeProvider>
-        <Navigator
-          loggedIn={loggedIn}
-          userData={userData}
-          routineData={routineData}
-          onLogin={handleLogin}
-          onLogout={handleLogout}
-        />
-      </ThemeProvider>
-    </DataProvider>
+    <TranslatorProvider>
+      <DataProvider>
+        <ThemeProvider>
+          <SafeAreaView style={{marginTop: 25, flex: 1}}>
+            <Navigator
+              loggedIn={loggedIn}
+              userData={userData}
+              routineData={routineData}
+              onLogin={handleLogin}
+              onLogout={handleLogout}
+            />
+          </SafeAreaView>
+        </ThemeProvider>
+      </DataProvider>
+    </TranslatorProvider>
   );
 }

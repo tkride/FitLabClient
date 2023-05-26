@@ -1,26 +1,24 @@
 // HomeScreen.js
-import React, { useState } from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
-import SessionAnalysis from '../components/SessionAnalysis';
-import ScreenTitle from '../components/ScreenTitle';
-import TableCustom from '../components/TableCustom';
-import { ThemeContext } from '../context/ThemeProvider';
-import BackButton from '../components/BackButton';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, View, Text, TouchableHighlight } from 'react-native';
+import SessionAnalysis from '../Components/SessionAnalysis';
+import ScreenTitle from '../Components/ScreenTitle';
+import TableCustom from '../Components/TableCustom';
+import { useTheme } from '../context/ThemeProvider';
+import BackButton from '../Components/BackButton';
+import { Avatar } from 'react-native-paper';
+import Config from '../config/Config';
+import { requestImage } from '../Services/api';
+import { Image } from '@rneui/themed';
 
 export default function HomeScreen() {
-  const { styles } = React.useContext(ThemeContext);
-  const [enableBack, setEnableBack] = useState(false);
-
-  const goBack = () => {
-    console.log('Go back');
-  }
+  const { styles } = useTheme();
 
   return (
-    <View style={ styles.container }>
-      { enableBack && <BackButton onPress={goBack} style={styles.backButton} />}
-      <ScreenTitle title='Inicio' />
-      <Text style={styles.text}>Bienvenido a Trainning Log</Text>
+    <SafeAreaView style={ styles.container }>
+      <Text style={styles.text}>Bienvenido a Fit Lab</Text>
+      {/* <TableCustom /> */}
       {/* <SessionAnalysis /> */}
-    </View>
+    </SafeAreaView>
   );
 }

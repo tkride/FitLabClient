@@ -2,7 +2,6 @@ import Config from "../config/Config";
 
 export const requestExercises = async (user) => {
   try {
-    console.log('requestExercises', user);
     let request = `${Config.REQUESTS.EXERCISES}`;
     const method = Config.METHODS.POST;
     const headers = Config.HEADERS;
@@ -19,8 +18,6 @@ export const requestExercises = async (user) => {
 
 export const requestRoutines = async (user) => {
   try {
-    console.log('requestRoutines', user)
-
     let request = `${Config.REQUESTS.ROUTINES}`;
     const method = Config.METHODS.POST;
     const headers = Config.HEADERS;
@@ -35,7 +32,11 @@ export const requestRoutines = async (user) => {
 };
 
 export const requestSessions = async (user) => {
-  const response = await fetch(`${Config.REQUESTS.SESSIONS}/${user}`);
+  let request = Config.REQUESTS.SESSIONS;
+  const method = Config.METHODS.POST;
+  const headers = Config.HEADERS;
+  const body = JSON.stringify({ user });
+  const response = await fetch(request, { method, headers, body });
   const data = await response.json();
   return data;
 };
@@ -207,3 +208,4 @@ export const requestAddUser = async (username, password) => {
   const data = await response.json();
   return data;
 };
+

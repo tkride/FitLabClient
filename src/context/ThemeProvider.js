@@ -1,14 +1,20 @@
-import React, { createContext, useState } from 'react';
-import { styles as stylesFamily } from '../styles/styles';
+import React, { createContext, useEffect, useState } from 'react';
+import { styles as stylesFamily } from '../Styles/styles';
+import { StatusBar } from 'react-native';
 
-export const ThemeContext = createContext();
+const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState('dark');
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
+    StatusBar.setBarStyle( `${theme}-content`, true);
   };
+
+  useEffect(() => {
+    StatusBar.setBarStyle( `${theme}-content`, true);
+  }, [theme]);
 
   const styles = theme === 'light' ? stylesFamily.light : stylesFamily.dark;
 
@@ -18,3 +24,6 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
+
+
+export const useTheme = () => React.useContext(ThemeContext);
