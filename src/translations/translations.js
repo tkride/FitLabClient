@@ -44,10 +44,11 @@ export const translations = {
     minutes: 'Minutes',
     seconds: 'Seconds',
     time: 'Time',
-    rest: 'rest',
-    wasted: 'wasted',
+    rest: 'Rest',
+    wasted: 'Wasted',
     weight: 'Weight',
     rir: 'RIR',
+    total: 'Total',
 
     // Sessions
     workoutSessions: 'Workout sessions',
@@ -157,6 +158,7 @@ export const translations = {
     wasted: 'Perd',
     weight: 'Peso',
     rir: 'RIR',
+    total: 'Total',
 
     // Sessions
     workoutSessions: 'Sesiones de entrenamiento',
