@@ -93,16 +93,6 @@ const layout = {
     underlayColor: 'transparent',
     zIndex: 1,
   },
-  // buttonRoutine: {
-  //   alignItems: 'flex-start',
-  //   justifyContent: 'center',
-  //   height: 30,
-  //   width: '50%',
-  //   margin: 2,
-  //   activeOpacity: 0.5,
-  //   underlayColor: 'transparent',
-  //   borderRadius: 2,
-  // },
   button: {
     padding: 10,
     borderRadius: 5,
@@ -135,6 +125,16 @@ const layout = {
     marginBottom: 20,
     // Font
     fontSize: 16,
+  },
+  searchBar: {
+    height: 40,
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 16,
+    fontSize: 16,
+  },
+  filterTag: {
+    borderRadius: 15,
   },
   card: {
     marginTop: 5,
@@ -306,6 +306,14 @@ const light = {
   input: {
     color: textLight,
   },
+  searchBar: {
+    color: textLight,
+    borderColor: grayHeaderLight,
+  },
+  filterTag: {
+    backgroundColor: primaryLight,
+    color: headerTextLight,
+  },
   placeholderText: '#b4b4b4',
   scrollView: {},
   card: {
@@ -424,6 +432,14 @@ const dark = {
   input: {
     color: textDark,
   },
+  searchBar: {
+    color: textDark,
+    borderColor: grayHeaderDark,
+  },
+  filterTag: {
+    backgroundColor: primaryDark,
+    color: headerTextDark,
+  },
   placeholderText: '#525252',
   scrollView: {},
   card: {
@@ -512,6 +528,8 @@ const stylesLight = {
   button: { ...layout.button, ...light.button },
   border: { ...layout.border, ...light.border },
   input: { ...layout.input, ...light.input },
+  searchBar: { ...layout.searchBar, ...light.searchBar },
+  filterTag: { ...layout.filterTag, ...light.filterTag },
   placeholderText: light.placeholderText,
   // buttonRoutine: { ...layout.buttonRoutine, ...light.buttonRoutine },
   card: { ...layout.card, ...light.card },
@@ -561,6 +579,8 @@ const stylesDark = {
   button: { ...layout.button, ...dark.button },
   border: { ...layout.border, ...dark.border },
   input: { ...layout.input, ...dark.input },
+  searchBar: { ...layout.searchBar, ...dark.searchBar },
+  filterTag: { ...layout.filterTag, ...dark.filterTag },
   placeholderText: dark.placeholderText,
   // buttonRoutine: { ...layout.buttonRoutine, ...dark.buttonRoutine },
   card: { ...layout.card, ...dark.card },

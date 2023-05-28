@@ -27,6 +27,7 @@ export const translations = {
     create: 'Create',
     target: 'Target',
     targetedMuscles: 'Targeted muscles',
+    search: 'Search',
 
     welcomeMessage: 'Welcome!',
     homeScreen: 'Home',
@@ -90,6 +91,8 @@ export const translations = {
     'Latissimus Dorsi': 'Latissimus Dorsi',
     'Deltoids': 'Deltoids',
     
+    zones: ['Upper Legs', 'Lower Legs', 'Chest', 'Back', 'Shoulders', 'Biceps', 'Tricep', 'Abs', 'Forearms', 'Calves', 'Glutes', 'Hamstrings', 'Quadriceps', 'Trapezius', 'Latissimus Dorsi', 'Deltoids'],
+
     'Lower Back': 'Lower Back',
     'Traps': 'Traps',
     'Lats': 'Lats',
@@ -131,6 +134,7 @@ export const translations = {
     create: 'Crear',
     target: 'Objetivo',
     targetedMuscles: 'Músculos objetivo',
+    search: 'Buscar',
 
     email: 'Email',
     theme: 'Tema',
@@ -199,6 +203,8 @@ export const translations = {
     'Trapezius': 'Trapecio',
     'Latissimus Dorsi': 'Dorsal ancho',
     'Deltoids': 'Deltoides',
+
+    zones: ['Muslos', 'Pantorrillas', 'Pecho', 'Espalda', 'Hombros', 'Bíceps', 'Tríceps', 'Abdominales', 'Antebrazos', 'Pantorrillas', 'Glúteos', 'Isquiosurales', 'Cuádriceps', 'Trapecio', 'Dorsal ancho', 'Deltoides'],
 
     'Lower Back': 'Espalda baja',
     'Traps': 'Trapecio',

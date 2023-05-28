@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Config from '../config/Config';
 import {View, Text} from 'react-native';
-import { Avatar, Card } from 'react-native-paper';
+import { Avatar } from 'react-native-paper';
 import { useTheme } from '../context/ThemeProvider';
 import { useTranslator } from '../context/TranslatorProvider';
 import { useData } from '../context/DataProvider';

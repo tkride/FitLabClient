@@ -20,7 +20,7 @@ export default function RoutinesViewerDaysExercisesScreen({ navigation, route })
     <View style={styles.container}>
       <BackButton onPress={goBack} style={styles.backButton} />
       <ScreenTitle title={`${translate('days')} / ${translate('exercises')}`} />
-      <Text style={[styles.subtitle, { marginLeft: 15 }]}>{routine + ' / ' + day.name}</Text>
+      <Text style={[styles.subtitle, { marginLeft: 15 }]}>{routine + ' / ' + day?.name}</Text>
         <DayExercises navigation={navigation} routine={routine} day={day} />
     </View>
   );

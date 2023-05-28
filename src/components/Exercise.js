@@ -1,7 +1,7 @@
 // RoutineContent.js
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, Image } from 'react-native';
-import { Avatar, Card, List } from 'react-native-paper';
+import { Card } from 'react-native-paper';
 import { TableCustom } from './TableCustom';
 import { useTheme } from '../context/ThemeProvider';
 import { useTranslator } from '../context/TranslatorProvider';
@@ -9,7 +9,6 @@ import { useData } from '../context/DataProvider';
 import { TouchableOpacity } from 'react-native';
 import Draggable from 'react-native-draggable';
 import Config from '../config/Config';
-import { Platform } from 'react-native';
 import ImageSequence from './ImageSequence';
 
 
@@ -25,7 +24,7 @@ export default function DayExercises({ navigation, routine, day, exercise }) {
   }
 
   useEffect(() => {
-    console.log(exercise)
+    console.log('Exercise COMPONENT:', exercise)
     const fileNameES1 = exercise?.name?.toLowerCase().replace(/\s/g, '-') + Config.IMAGES.EXERCISE_STEP_1_FILE_APPEND;
     const exerciseStep1URI = Config.REQUESTS.IMAGES_EXERCISE_STEPS + '/' + fileNameES1;
 

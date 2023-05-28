@@ -4,14 +4,15 @@ import { View } from 'react-native';
 import SessionAnalysis from '../Components/SessionAnalysis';
 import ScreenTitle from '../Components/ScreenTitle';
 import { useTheme } from '../context/ThemeProvider';
+import ExerciseBrowser from '../Components/ExerciseBrowser';
 
-export default function RoutineCreateSreen() {
+export default function RoutineCreateSreen({ navigation }) {
   const { styles } = useTheme();
   
   return (
     <View style={styles.container}>
       {/* <ScreenTitle title='Creación' /> */}
-      <SessionAnalysis />
+      <ExerciseBrowser navigation={navigation}/>
     </View>
   );
 }
