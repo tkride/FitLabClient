@@ -10,7 +10,7 @@ import Config from '../config/Config';
 // import Draggable from 'react-native-draggable';
 // import { Platform } from 'react-native';
 
-export default function DayExercises({ navigation, routine, day }) {
+export default function DayExercises({ onPress, routine, day }) {
   const { styles } = useTheme();
   const { translate } = useTranslator();
   const { nanoid, routines } = useData();
@@ -19,7 +19,8 @@ export default function DayExercises({ navigation, routine, day }) {
   const [images, setImages] = useState([]);
 
   const handleSelect = (exercise) => {
-    navigation.navigate('Ejercicio', { routine, day, exercise });
+    if(onPress) onPress(day, exercise);
+    // navigation.navigate('Ejercicio', { routine, day, exercise });
   }
 
   useEffect(() => {

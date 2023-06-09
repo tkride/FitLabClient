@@ -17,12 +17,17 @@ export default function RoutinesViewerDaysScreen({ navigation, route }) {
     navigation.goBack();
   }
 
+  const handleOnPressDay = (day) => {
+    console.log('handleOnPressDay', day);
+    navigation.navigate('Ejercicios', { routine, day });
+  };
+
   return (
     <View style={styles.container}>
       <BackButton onPress={goBack} style={styles.backButton} />
       <ScreenTitle title={`${translate('days')}`} />
       <Text style={[styles.subtitle, { marginLeft: 15 }]}>{routine}</Text>
-        <RoutineDays navigation={navigation} routine={routine} />
+        <RoutineDays onPress={handleOnPressDay} routine={routine} />
     </View>
   );
 }

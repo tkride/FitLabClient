@@ -22,7 +22,7 @@ export default function RoutinesViewerExerciseScreen({ navigation, route }) {
       {/* <ScreenTitle title={routine + ' / ' + day.name} /> */}
       <Text style={[styles.subtitle, { marginLeft: 15 }]}>{routine + ' / ' + day?.name}</Text>
       {/* <ScreenTitle title={'... / ' + day.name} /> */}
-        <Exercise navigation={navigation} routine={routine} day={day} exercise={exercise} />
+        <Exercise exercise={exercise} />
     </View>
   );
 }

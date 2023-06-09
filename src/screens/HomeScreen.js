@@ -10,13 +10,15 @@ import { Avatar } from 'react-native-paper';
 import Config from '../config/Config';
 import { requestImage } from '../Services/api';
 import { Image } from '@rneui/themed';
+import ExerciseBrowser from '../Components/ExerciseBrowser';
 
 export default function HomeScreen() {
   const { styles } = useTheme();
 
   return (
     <SafeAreaView style={ styles.container }>
-      <Text style={styles.text}>Bienvenido a Fit Lab</Text>
+      {/* <Text style={styles.text}>Bienvenido a Fit Lab</Text> */}
+      <ExerciseBrowser />
       {/* <TableCustom /> */}
       {/* <SessionAnalysis /> */}
     </SafeAreaView>

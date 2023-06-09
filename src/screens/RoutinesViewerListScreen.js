@@ -8,9 +8,15 @@ import RoutineBrowser from '../Components/RoutineBrowser';
 export default function RoutinesViewerListScreen({ navigation }) {
   const { styles } = useTheme();
 
+  handleOnPressRoutine = (routine) => {
+    console.log('handleOnSelectRoutine', routine);
+    navigation.navigate('Días', { routine });
+  };
+
   return (
     <View style={styles.container}>
-      <RoutineBrowser navigation={navigation} destination={'Días'} />
+      {/* <RoutineBrowser navigation={navigation} destionation={'Días'} /> */}
+      <RoutineBrowser onPress={handleOnPressRoutine} />
     </View>
   );
 }

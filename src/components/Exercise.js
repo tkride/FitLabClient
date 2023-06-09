@@ -12,16 +12,14 @@ import Config from '../config/Config';
 import ImageSequence from './ImageSequence';
 
 
-export default function DayExercises({ navigation, routine, day, exercise }) {
+export default function Exercise({ exercise }) {
   const { styles } = useTheme();
   const { translate } = useTranslator();
-  const { nanoid, routines } = useData();
+  const { nanoid } = useData();
   const [exerciseSteps, setExerciseSteps] = useState([]);
   const [targetedMusclesImage, setTargetedMusclesImage] = useState();
 
-  const handleSelect = (day) => {
-    // navigation.navigate('Ejercicio', { routine, day });
-  }
+  // TODO IMPLEMENTAR UN BELONGS TO ROUTINE ?
 
   useEffect(() => {
     console.log('Exercise COMPONENT:', exercise)
@@ -72,32 +70,39 @@ export default function DayExercises({ navigation, routine, day, exercise }) {
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
-                  <ImageSequence
-                    images={exerciseSteps}
-                    time={1000}
-                    styleImage={{ flex: 1, height: 200, borderRadius: 10 }}
-                    resizeMode={'cover'}
-                  />
+                  {exerciseSteps &&
+                    <ImageSequence
+                      images={exerciseSteps}
+                      time={1000}
+                      styleImage={{ flex: 1, height: 200, borderRadius: 10 }}
+                      resizeMode={'cover'}
+                    />}
                   {targetedMusclesImage &&
                   <Image source={{ uri: targetedMusclesImage }} style={{ flex: 0.75, height: 200, borderRadius: 10, marginLeft: 10, zIndex: 1 }} resizeMode='stretch' />}
                 </View>
 
                 <View style={{ flexDirection: 'column', flex: 1, alignContent: 'flex-start' }}>
 
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={{...styles.textBigger,  color: styles.subtitle.color}}>{`${translate('zones')}:`}</Text>
-                    <Text style={{...styles.textBigger, color: styles.subtitle.color, marginLeft: 10}}>{translateMuscles(exercise.mainMuscles)}</Text>
-                  </View>
+                  {exercise.mainMuscles &&
+                   <View style={{flexDirection: 'row'}}>
+                      <Text style={{...styles.textBigger,  color: styles.subtitle.color}}>{`${translate('zones')}:`}</Text>
+                      <Text style={{...styles.textBigger, color: styles.subtitle.color, marginLeft: 10}}>{translateMuscles(exercise.mainMuscles)}</Text>
+                    </View>
+                  }
 
-                  <View style={{ flexDirection: 'row'}}>
-                    <Text style={{...styles.textBigger, color: styles.subtitle.color}}>{`${translate('mainMuscles')}:`}</Text>
-                    <Text style={{...styles.textBigger, color: styles.subtitle.color, marginLeft: 10}}>{translateMuscles(exercise.mainMuscles)}</Text>
-                  </View>
+                  {exercise.mainMuscles &&
+                    <View style={{ flexDirection: 'row'}}>
+                      <Text style={{...styles.textBigger, color: styles.subtitle.color}}>{`${translate('mainMuscles')}:`}</Text>
+                      <Text style={{...styles.textBigger, color: styles.subtitle.color, marginLeft: 10}}>{translateMuscles(exercise.mainMuscles)}</Text>
+                    </View>
+                  }
 
-                  <View style={{ flexDirection: 'row'}}>
-                    <Text style={{...styles.textBigger, color: styles.subtitle.color}}>{`${translate('secondaryMuscles')}:`}</Text>
-                    <Text style={{...styles.textBigger, color: styles.subtitle.color, marginLeft: 10}}>{translateMuscles(exercise.secondaryMuscles)}</Text>
-                  </View>
+                  {exercise.secondaryMuscles &&
+                    <View style={{ flexDirection: 'row'}}>
+                      <Text style={{...styles.textBigger, color: styles.subtitle.color}}>{`${translate('secondaryMuscles')}:`}</Text>
+                      <Text style={{...styles.textBigger, color: styles.subtitle.color, marginLeft: 10}}>{translateMuscles(exercise.secondaryMuscles)}</Text>
+                    </View>
+                  }
                   
                 </View>
 

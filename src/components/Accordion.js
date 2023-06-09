@@ -19,7 +19,7 @@ const Accordion = ({
   const stylesDefault = StyleSheet.create({
     container: {
       backgroundColor: styles.gray,
-      margin: 10,
+      margin: 5,
       borderRadius: styles.borderRadius,
     },
     header: {

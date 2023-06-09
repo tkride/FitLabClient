@@ -8,6 +8,7 @@ const Config = {
     SESSIONS: BASE_URL + '/sessions',
     EXERCISE_LOGS: BASE_URL + '/exercise-logs',
     EXERCISE_NOTES: BASE_URL + '/exercise-notes',
+    TRANSLATIONS: BASE_URL + '/translations',
     USERS: BASE_URL + '/users',
     LOGIN: BASE_URL + '/login',
     REGISTER: BASE_URL + '/register',

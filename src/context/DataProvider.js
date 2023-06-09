@@ -1,5 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { customAlphabet } from 'nanoid/non-secure'
+import { getExercises, getRoutines, getSessions } from '../Services/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DataContext = createContext();
 
@@ -14,6 +16,10 @@ export const DataProvider = ({ children }) => {
     setUser(user);
   };
 
+  const loadExercises = (exercises) => {
+    setExercises(exercises);
+  };
+
   const loadRoutines = (routines) => {
     console.log('loadRoutines', routines);
     setRoutines(routines);
@@ -23,8 +29,13 @@ export const DataProvider = ({ children }) => {
     setSessions(sessions);
   };
 
-  const loadExercises = (exercises) => {
-    setExercises(exercises);
+  const loadUserInfo = async (username) => {
+    const exercisesData = await getExercises(username);
+    setExercises(exercisesData);
+    const routinesData = await getRoutines(username);
+    setRoutines(routinesData);
+    const sessionsData = await getSessions(username);
+    setSessions(sessionsData);
   };
 
   const toLocaleString = (date) => {
@@ -37,8 +48,45 @@ export const DataProvider = ({ children }) => {
     return `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`;
   };
 
+  const saveToStorage = async (data) => {
+    for (const key in data) {
+      await AsyncStorage.setItem(key, data[key]);
+    }
+  }
+
+  const loadFromStorage = async (keys) => {
+    const data = {};
+    for (const key of keys) {
+      data[key] = await AsyncStorage.getItem(key);
+    }
+    return data;
+  }
+
+  const removeFromStorage = async (keys) => {
+    for (const key of keys) {
+      await AsyncStorage.removeItem(key);
+    }
+  }
+
+  const dataContextValue = {
+    nanoid,
+    user,
+    routines,
+    sessions,
+    exercises,
+    loadUser,
+    loadUserInfo,
+    loadRoutines,
+    loadSessions,
+    loadExercises,
+    toLocaleString,
+    saveToStorage,
+    loadFromStorage,
+    removeFromStorage,
+  };
+
   return (
-    <DataContext.Provider value={{ nanoid, user, routines, sessions, exercises, loadUser, loadRoutines, loadSessions, loadExercises, toLocaleString }}>
+    <DataContext.Provider value={dataContextValue}>
       {children}
     </DataContext.Provider>
   );

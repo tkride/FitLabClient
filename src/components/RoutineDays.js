@@ -12,7 +12,7 @@ import BackButton from './BackButton';
 import Config from '../config/Config';
 import { useTranslator } from '../context/TranslatorProvider';
 
-export default function RoutineDays({ navigation, routine }) {
+export default function RoutineDays({ onPress, routine }) {
   const { styles } = useTheme();
   const { language, translate } = useTranslator();
   const { nanoid, routines } = useData();
@@ -47,7 +47,8 @@ export default function RoutineDays({ navigation, routine }) {
   }
 
   const handleSelect = (day) => {
-    navigation.navigate('Ejercicios', { routine: routineData.name, day });
+    // navigation.navigate('Ejercicios', { routine: routineData.name, day });
+    if(onPress) onPress(day);
   }
 
   const calcDuration = (day) => {

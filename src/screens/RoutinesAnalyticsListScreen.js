@@ -8,9 +8,15 @@ import RoutineBrowser from '../Components/RoutineBrowser';
 export default function RoutinesAnalyticsListScreen({ navigation }) {
   const { styles } = useTheme();
 
+  handleOnPressRountine = (routine) => {
+    console.log('handleOnSelectRoutine', routine);
+    navigation.navigate('AnalyticsTabs', { routine });
+  };
+  
   return (
     <View style={styles.container}>
-      <RoutineBrowser navigation={navigation} destination={'AnalyticsTabs'} />
+      <RoutineBrowser onPress={handleOnPressRountine} />
+      {/* <RoutineBrowser navigation={navigation} destination={'AnalyticsTabs'} /> */}
     </View>
   );
 }

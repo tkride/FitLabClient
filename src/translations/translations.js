@@ -5,16 +5,24 @@ export const translations = {
     login: 'Login',
     user: 'User',
     password: 'Password',
+    rememberMe: 'Remember me',
     loginError: 'Incorrect username or password',
-
-    previous: 'Previous',
-    next: 'Next',
-
     email: 'Email',
     theme: 'Theme',
     selectLanguage: 'Select Language:',
     language: 'Language:',
     closeSession: 'Close session',
+
+    previous: 'Previous',
+    next: 'Next',
+    cancel: 'Cancel',
+    accept: 'Accept',
+    select: 'Select',
+    create: 'Create',
+    search: 'Search',
+    save: 'Save',
+    edit: 'Edit',
+    delete: 'Delete',
 
     // Screens
     home: 'Home',
@@ -22,12 +30,12 @@ export const translations = {
     sessions: 'Sessions',
     routines: 'Routines',
 
+    routineName: 'Routine name',
+
     visualize: 'Visualize',
     analyze: 'Analyze',
-    create: 'Create',
     target: 'Target',
     targetedMuscles: 'Targeted muscles',
-    search: 'Search',
 
     welcomeMessage: 'Welcome!',
     homeScreen: 'Home',
@@ -39,7 +47,9 @@ export const translations = {
     muscles: 'Muscles',
     mainMuscles: 'Main muscles',
     secondaryMuscles: 'Secondary muscles',
+    equipment: 'Equipment',
 
+    day: 'Day',
     days: 'Days',
     sessions: 'Sessions',
     minutes: 'Minutes',
@@ -91,7 +101,21 @@ export const translations = {
     'Latissimus Dorsi': 'Latissimus Dorsi',
     'Deltoids': 'Deltoids',
     
-    zones: ['Upper Legs', 'Lower Legs', 'Chest', 'Back', 'Shoulders', 'Biceps', 'Tricep', 'Abs', 'Forearms', 'Calves', 'Glutes', 'Hamstrings', 'Quadriceps', 'Trapezius', 'Latissimus Dorsi', 'Deltoids'],
+    bodyZones: ['Upper Legs', 'Lower Legs', 'Chest', 'Back', 'Shoulders', 'Biceps', 'Tricep', 'Abs', 'Forearms', 'Glutes'],
+
+    musclesList: ['Quadriceps', 'Rectus femoris', 'Vastus internus', 'Vastus externus', 'Vastus medialis', 'Adductors', 'Sartorius', 'Abductors',
+                'Hamstrings', 'Semimembranosus', 'Semitendinosus', 'Biceps femoris',
+                'Calves', 'Tibialis anterior', 'Gastrocnemius', 'Soleus', 'Gastrocnemius',
+                'Glutes', 'Gluteus maximus', 'Gluteus medius', 'Gluteus minimus',
+                'Abs', 'Rectus abdominis', 'Obliques', 'Transversus abdominis',
+                'Pectoral', 'Upper pectoral', 'Lower pectoral', 'Inner pectoral',
+                'Lats', 'Serratus anterior', 'Upper lats', 'Lower lats', 'Trapezius', 'Erector spinae', 'Serratus anterior',
+                'Delts', 'Front delts', 'Side delts', 'Rear delts',
+                'Biceps', 'Biceps brachii', 'Long biceps brachii', 'Short biceps brachii',
+                'Triceps', 'Triceps brachii', 'Long triceps brachii', 'Lateral triceps brachii', 'Medial triceps brachii',
+                'Forearms'],
+
+    equipmentList: ['Barbell', 'Dumbbell', 'Bench', 'Bodyweight', 'Cable', 'Machine', 'Kettlebell', 'Elastic band', 'Other'],
 
     'Lower Back': 'Lower Back',
     'Traps': 'Traps',
@@ -118,10 +142,24 @@ export const translations = {
     login: 'Iniciar sesión',
     user: 'Usuario',
     password: 'Contraseña',
+    rememberMe: 'Recuérdame',
     loginError: 'Usuario o contraseña incorrectos',
+    email: 'Email',
+    theme: 'Tema',
+    selectLanguage: 'Selecciona Idioma:',
+    language: 'Idioma:',
+    closeSession: 'Cerrar sesión',
 
     previous: 'Anterior',
     next: 'Siguiente',
+    cancel: 'Cancelar',
+    accept: 'Aceptar',
+    select: 'Seleccionar',
+    create: 'Crear',
+    search: 'Buscar',
+    save: 'Guardar',
+    edit: 'Editar',
+    delete: 'Eliminar',
 
     // Screens
     home: 'Inicio',
@@ -129,18 +167,12 @@ export const translations = {
     sessions: 'Sesiones',
     routines: 'Rutinas',
 
+    routineName: 'Nombre de la rutina',
+
     visualize: 'Visualizar',
     analyze: 'Analizar',
-    create: 'Crear',
     target: 'Objetivo',
     targetedMuscles: 'Músculos objetivo',
-    search: 'Buscar',
-
-    email: 'Email',
-    theme: 'Tema',
-    selectLanguage: 'Selecciona Idioma:',
-    language: 'Idioma:',
-    closeSession: 'Cerrar sesión',
 
     welcomeMessage: '¡Bienvenido!',
     homeScreen: 'Inicio',
@@ -152,7 +184,9 @@ export const translations = {
     muscles: 'Músculos',
     mainMuscles: 'Músculos principales',
     secondaryMuscles: 'Músculos secundarios',
+    equipment: 'Equipo',
 
+    day: 'Día',
     days: 'Días',
     sessions: 'Sesiones',
     minutes: 'Minutos',
@@ -204,7 +238,21 @@ export const translations = {
     'Latissimus Dorsi': 'Dorsal ancho',
     'Deltoids': 'Deltoides',
 
-    zones: ['Muslos', 'Pantorrillas', 'Pecho', 'Espalda', 'Hombros', 'Bíceps', 'Tríceps', 'Abdominales', 'Antebrazos', 'Pantorrillas', 'Glúteos', 'Isquiosurales', 'Cuádriceps', 'Trapecio', 'Dorsal ancho', 'Deltoides'],
+    bodyZones: ['Muslos', 'Pantorrillas', 'Pecho', 'Espalda', 'Hombros', 'Bíceps',
+                'Tríceps', 'Abdominales', 'Antebrazos', 'Glúteos'],
+    musclesList: ['Cuádriceps', 'Recto anterior', 'Vasto interno', 'Vasto externo', 'Vasto medio', 'Aductores', 'Sartorio', 'Abductores',
+                'Isquiosurales', 'Semimembranoso', 'Semitendinoso', 'Bíceps femoral',
+                'Pantorrillas', 'Tibial anterior', 'Gemelos', 'Sóleo', 'Gastrocnemio',
+                'Glúteos', 'Glúteo mayor', 'Glúteo medio', 'Glúteo menor',
+                'Abdominales', 'Recto abdominal', 'Oblicuos', 'Transverso abdominal',
+                'Pectoral', 'Pectoral superior', 'Pectoral inferior', 'Pectoral interno',
+                'Dorsal ancho', 'Serato mayor', 'Dorsal superior', 'Dorsal inferior', 'Trapecio', 'Erectores espinales', 'Serrato anterior',
+                'Deltoides', 'Deltoides frontal', 'Deltoides lateral', 'Deltoides posterior',
+                'Bíceps', 'Bíceps braquial', 'Bíceps braquial largo', 'Bíceps braquial corto',
+                'Tríceps', 'Tríceps braquial', 'Tríceps braquial largo', 'Tríceps braquial lateral', 'Tríceps braquial medial',
+                'Antebrazos'],
+                
+    equipmentList: ['Barra', 'Mancuerna', 'Banca', 'Peso corporal', 'Cable', 'Máquina', 'Kettlebell', 'Banda elástica', 'Otro'],
 
     'Lower Back': 'Espalda baja',
     'Traps': 'Trapecio',

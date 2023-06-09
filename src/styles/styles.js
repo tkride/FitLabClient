@@ -14,6 +14,16 @@ const layout = {
     alignContent: 'center',
     // justifyContent: 'center',
   },
+  modal: {
+    position: 'absolute',
+    borderRadius: borderRadius,
+    borderWidth: 1,
+    zIndex: 99999,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
   scrollView: { height: '100%', },
   loginStyle: {
     flex: 1,
@@ -100,6 +110,18 @@ const layout = {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonSlim: {
+    padding: 2,
+    borderRadius: 50,
+    // Font
+    fontSize: 22,
+    // fontWeight: 'bold',
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
     // paddingLeft: 10,
@@ -126,15 +148,32 @@ const layout = {
     // Font
     fontSize: 16,
   },
-  searchBar: {
+  inputText: {
     height: 40,
-    borderWidth: 1,
-    borderRadius: 4,
-    paddingHorizontal: 16,
+    borderWidth: 2,
+    borderRadius: 50,
+    paddingLeft: 15,
+    // paddingHorizontal: 16,
     fontSize: 16,
   },
-  filterTag: {
+  tagFilter: {
+    padding: 10,
+    paddingTop: 2,
+    paddingBottom: 5,
+    margin: 3,
     borderRadius: 15,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  selectedTag: {
+    padding: 10,
+    paddingTop: 2,
+    paddingBottom: 5,
+    margin: 3,
+    borderRadius: 15,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    fontWeight: 'bold',
   },
   card: {
     marginTop: 5,
@@ -154,7 +193,7 @@ const layout = {
   },
   error: {
     fontSize: 18,
-    color: '#ff0000',
+    // color: '#ff0000',
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -217,6 +256,7 @@ const grayHeaderLight = '#dcdcdc';
 const grayLight = '#f0f0f0';
 const cardBackLight = '#257cff';
 const cardBackRoutineLight = primaryLight;
+const errorLight = '#d65076';
 
 const headerTextLight = '#fff';
 const titleTextLight = '#ccc';
@@ -228,15 +268,21 @@ const inactiveLight = 'gray';
 
 const overBackDark = '#121212';
 const mainBackDark = '#000';
-const primaryDark = '#4a148c';
-const secondaryDark = '#03dac5';
+// const primaryDark = '#4a148c';
+// const secondaryDark = '#03dac5';
+// const grayHeaderDark = '#cbcbcb';
+// const grayDark = '#f0f0f0';
+const primaryDark = '#101010';
+const secondaryDark = '#00bfa5';
 const tertiaryDark = '#ffff00';
-const grayHeaderDark = '#cbcbcb';
-const grayDark = '#f0f0f0';
+const grayHeaderDark = '#d4dddb';
+const grayDark = '#373737';
 const cardBackDark = '#121212';
 const cardBackRoutineDark = primaryDark;
+const errorDark = '#d65076';
 
-const headerTextDark = '#e1e1e1';
+// const headerTextDark = '#d4dddb';
+// const headerTextDark = grayHeaderDark;
 const titleTextDark = '#c1c1c1';
 const textDark = '#8a8a8a';
 
@@ -250,6 +296,10 @@ const light = {
   view: {
     // backgroundColor: overBackLight,
     backgroundColor: mainBackLight,
+  },
+  modal: {
+    backgroundColor: primaryLight,
+    borderColor: grayHeaderLight,
   },
   calendarStyle: {
     backgroundColor: primaryLight,
@@ -283,7 +333,11 @@ const light = {
   },
   button: {
     backgroundColor: primaryLight,
-    color: textLight,
+    color: grayHeaderLight,
+  },
+  buttonSlim: {
+    backgroundColor: secondaryLight,
+    color: primaryLight,
   },
   text: {
     color: textLight,
@@ -306,13 +360,18 @@ const light = {
   input: {
     color: textLight,
   },
-  searchBar: {
+  inputText: {
     color: textLight,
-    borderColor: grayHeaderLight,
+    // borderColor: primaryLight,
+    borderColor: secondaryDark,
   },
-  filterTag: {
+  tagFilter: {
     backgroundColor: primaryLight,
     color: headerTextLight,
+  },
+  selectedTag: {
+    backgroundColor: secondaryLight,
+    color: textLight,
   },
   placeholderText: '#b4b4b4',
   scrollView: {},
@@ -322,6 +381,9 @@ const light = {
   },
   cardContent: {
     color: textLight,
+  },
+  error: {
+    color: errorLight,
   },
   navigatorBottom: {
     headerTitleStyle: { ...layout.navigatorBottom.headerTitleStyle, color: headerTextLight },
@@ -336,7 +398,6 @@ const light = {
     tabBarInactiveTintColor: inactiveLight,
   },
   tableRoutine: {
-    ...layout.tableRoutine,
     borderColor: selectedLight,
   },
   rowRoutine: {
@@ -344,15 +405,12 @@ const light = {
     color: textLight,
   },
   tableHeadStyle: {
-    ...layout.tableHeadStyle,
     backgroundColor: secondaryLight,
   },
   tableHeadText: {
-    ...layout.tableHeadText,
     color: '#fff',
   },
   tableText: {
-    ...layout.tableText,
     color: textLight,
   },
 };
@@ -365,6 +423,10 @@ const dark = {
   view: {
     // backgroundColor: overBackDark,
     backgroundColor: mainBackDark,
+  },
+  modal: {
+    backgroundColor: primaryDark,
+    borderColor: 'black',
   },
   calendarStyle: {
     backgroundColor: primaryDark,
@@ -379,7 +441,7 @@ const dark = {
     backgroundColor: mainBackDark,
   },
   title: {
-    color: headerTextDark,
+    color: grayHeaderDark,
   },
   // title: {
     // color: titleTextDark,
@@ -404,8 +466,12 @@ const dark = {
   //   backgroundColor: '#1e1e1e',
   // },
   button: {
+    backgroundColor: secondaryDark,
+    color: grayHeaderDark,
+  },
+  buttonSlim: {
     backgroundColor: primaryDark,
-    color: textDark,
+    color: secondaryDark,
   },
   button2: {
     backgroundColor: secondaryDark,
@@ -432,13 +498,18 @@ const dark = {
   input: {
     color: textDark,
   },
-  searchBar: {
+  inputText: {
     color: textDark,
-    borderColor: grayHeaderDark,
+    // borderColor: primaryDark,
+    borderColor: secondaryDark,
   },
-  filterTag: {
+  tagFilter: {
     backgroundColor: primaryDark,
-    color: headerTextDark,
+    color: grayHeaderDark,
+  },
+  selectedTag: {
+    backgroundColor: secondaryDark,
+    color: 'black',
   },
   placeholderText: '#525252',
   scrollView: {},
@@ -449,8 +520,11 @@ const dark = {
   cardContent: {
     color: titleTextDark,
   },
+  error: {
+    color: errorDark,
+  },
   navigatorBottom: {
-    headerTitleStyle: { ...layout.navigatorBottom.headerTitleStyle, color: headerTextDark },
+    headerTitleStyle: { ...layout.navigatorBottom.headerTitleStyle, color: grayHeaderDark },
     headerStyle: { backgroundColor: overBackDark },
     tabBarActiveTintColor: selectedDark,
     tabBarInactiveTintColor: inactiveDark,
@@ -462,25 +536,20 @@ const dark = {
     tabBarInactiveTintColor: inactiveDark,
   },
   tableRoutine: {
-    ...layout.tableRoutine,
     borderColor: selectedDark,
   },
   rowRoutine: {
-    ...layout.rowRoutine,
     backgroundColor: 'red',
     color: 'gray',
   },
   tableHeadStyle: {
-    ...layout.tableHeadStyle,
     // backgroundColor: overBackDark,
     backgroundColor: secondaryDark,
   },
   tableHeadText: {
-    ...layout.tableHeadText,
     color: '#000',
   },
   tableText: { 
-    ...layout.tableText,
     color: titleTextDark,
   }
 };
@@ -488,6 +557,7 @@ const dark = {
 const stylesLight = {
   container: { ...layout.container, ...light.container },
   view: { ...layout.view, ...light.view },
+  modal: { ...layout.modal, ...light.modal },
   loginStyle: { ...layout.loginStyle, ...light.loginStyle },
   cardBack: cardBackLight,
   cardBackRoutine: cardBackRoutineLight,
@@ -526,10 +596,12 @@ const stylesLight = {
   buttonTheme: { ...layout.buttonTheme, ...light.buttonTheme },
   backButton: { ...layout.backButton, ...light.backButton },
   button: { ...layout.button, ...light.button },
+  buttonSlim: { ...layout.buttonSlim, ...light.buttonSlim },
   border: { ...layout.border, ...light.border },
   input: { ...layout.input, ...light.input },
-  searchBar: { ...layout.searchBar, ...light.searchBar },
-  filterTag: { ...layout.filterTag, ...light.filterTag },
+  inputText: { ...layout.inputText, ...light.inputText },
+  tagFilter: { ...layout.tagFilter, ...light.tagFilter },
+  selectedTag: { ...layout.selectedTag, ...light.selectedTag },
   placeholderText: light.placeholderText,
   // buttonRoutine: { ...layout.buttonRoutine, ...light.buttonRoutine },
   card: { ...layout.card, ...light.card },
@@ -540,6 +612,7 @@ const stylesLight = {
 const stylesDark = {
   container: { ...layout.container, ...dark.container },
   view: { ...layout.view, ...dark.view },
+  modal: { ...layout.modal, ...dark.modal },
   loginStyle: { ...layout.loginStyle, ...dark.loginStyle },
   cardBack: cardBackDark,
   cardBackRoutine: cardBackRoutineDark,
@@ -550,7 +623,7 @@ const stylesDark = {
   tertiary: tertiaryDark,
   grayHeader: grayHeaderDark,
   gray: grayDark,
-  headerText: headerTextDark,
+  headerText: grayHeaderDark,
   navigatorBottom: { ...layout.navigatorBottom, ...dark.navigatorBottom },
   navigatorTop: { ...layout.navigatorTop, ...dark.navigatorTop },
   tableRoutine: { ...layout.tableRoutine, ...dark.tableRoutine },
@@ -577,10 +650,12 @@ const stylesDark = {
   buttonTheme: { ...layout.buttonTheme, ...dark.buttonTheme },
   backButton: { ...layout.backButton, ...dark.backButton },
   button: { ...layout.button, ...dark.button },
+  buttonSlim: { ...layout.buttonSlim, ...dark.buttonSlim },
   border: { ...layout.border, ...dark.border },
   input: { ...layout.input, ...dark.input },
-  searchBar: { ...layout.searchBar, ...dark.searchBar },
-  filterTag: { ...layout.filterTag, ...dark.filterTag },
+  inputText: { ...layout.inputText, ...dark.inputText },
+  tagFilter: { ...layout.tagFilter, ...dark.tagFilter },
+  selectedTag: { ...layout.selectedTag, ...dark.selectedTag },
   placeholderText: dark.placeholderText,
   // buttonRoutine: { ...layout.buttonRoutine, ...dark.buttonRoutine },
   card: { ...layout.card, ...dark.card },

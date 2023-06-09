@@ -1,30 +1,33 @@
 // RoutineBrowser.js
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, ScrollView, Image } from 'react-native';
-import { Card, ListItem, List, Avatar } from 'react-native-paper';
-import { TableCustom } from './TableCustom';
+import { View, Text, ScrollView } from 'react-native';
+import { Card } from 'react-native-paper';
 import { useTheme } from '../context/ThemeProvider';
 import { useTranslator } from '../context/TranslatorProvider';
 import { useData } from '../context/DataProvider';
 import { TouchableOpacity } from 'react-native';
-import Draggable from 'react-native-draggable';
-import ScreenTitle from './ScreenTitle';
+// importa la api para obtener las rutinas
 
-export default function RoutineBrowser({ navigation, destination }) {
+// import Draggable from 'react-native-draggable';
+// import ScreenTitle from './ScreenTitle';
+
+// export default function RoutineBrowser({ navigation, destination }) {
+export default function RoutineBrowser({ onPress }) {
   const { styles } = useTheme();
   const { translate } = useTranslator();
-  const { user, routines, sessions, nanoid } = useData();
+  const { user, routines, nanoid } = useData();
 
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
   const [routineNames, setRoutineNames] = useState([]);
-  const [exercises, setExercises] = useState(null);
+  // const [exercises, setExercises] = useState(null);
 
   const handleSelect = (routine) => {
-    navigation.navigate(destination, {routine});
+    // navigation.navigate(destination, {routine});
+    if(onPress) onPress(routine);
   }
 
   useEffect(() => {
-    const rNames = routines.map( r => r ? r.name : '');
+    const rNames = routines?.map( r => r ? r.name : '');
     setRoutineNames(rNames);
   }, []);
 
