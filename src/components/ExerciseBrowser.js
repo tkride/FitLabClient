@@ -116,8 +116,8 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
   }
 };
 
-  const handleOnPress = (exercise) => {
-    console.log('ExerciseBrowser COMPONENT: handleOnPress: ', exercise);
+  const handleOnPressExercise = (exercise) => {
+    console.log('------ ExerciseBrowser COMPONENT: handleOnPress: ', exercise);
     if(multipleSelection) {
       const index = selected.findIndex(e => e.id === exercise.id);
       if(index >= 0) {
@@ -125,42 +125,64 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
         newSelected.splice(index, 1);
         setSelected(newSelected);
       }
-      else {
-        setSelected([...selected, exercise]);
-      }
+      else setSelected([...selected, exercise]);
+      console.log('+++++++++++++++++++++++++++++++++++');
+      console.log('--------------------------------- ', [...selected, exercise]);
+      console.log('+++++++++++++++++++++++++++++++++++');
+      
     }
-    else {
-      handleOnSelect(exercise);
-    }
+    else handleOnSelect(exercise);
   };
 
-  const handleOnSelect = (exercises) => {
-    console.log('ExerciseBrowser COMPONENT: handleOnSelect: ', selected);
-    if(onSelect) onSelect(selected);
+  const handleOnSelect = (exercise) => {
+    console.log('ExerciseBrowser COMPONENT: handleOnSelect: ', exercise);
+    const ret = exercise ? [exercise] : selected;
+    console.log('ExerciseBrowser COMPONENT: handleOnSelect: ', ret);
+    if(onSelect) onSelect(ret);
   };
 
   const handleOnCancel = () => {
-    console.log('ExerciseBrowser COMPONENT: handleOnCancel: ', selected);
+    console.log('ExerciseBrowser COMPONENT: handleOnCancel.');
     if(onCancel) onCancel();
   };
 
   const renderItem = ({ item }) => {
+    const ItemTitle = translate(item.name);
+
+    const ItemDescription = (
+      <View
+        styles={{
+          backgroundColor: 'red',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+        <View style={{flexDirection: 'row', flex: 1}}>
+          <Text style={{...styles.textBig, flex: 0}} >{translate(item.zone)}, </Text>
+          {/* <Text style={{...styles.textBig, flex: 0}} >{translate(item.mainMuscles)}</Text> */}
+          <Text style={{...styles.textBig, flex: 0}} >{translate(item.secondaryMuscles)}</Text>
+        </View>
+        <Text style={{...styles.textBig, flex: 0}} >{translate(item.equipment)}</Text>
+      </View>
+    );
+
     return (
-      <TouchableOpacity onPress={() => handleOnPress(item)}>
+      <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'space-between'}} onPress={() => handleOnPressExercise(item)}>
         <List.Item
-          title={translate(item.name) || item.name}
+        style={{flex: 1}}
+          title={ItemTitle}
           titleStyle={{ ...styles.textBig, color: styles.secondary }}
-          // description={item.muscle}
-          // left={() => <Text style={{ color: styles.primary, marginRight: 10 }}>{item.weight}kg</Text>}
+          description={ItemDescription}
+          descriptionStyle={{ ...styles.textBig, color: styles.secondary }}
           left={() => <Avatar.Image size={60} source={images[item.name]} style={{ flex: 1, maxWidth: 60 }} /> }
-          right={() => <Icon
-              type='ant-design'
-              style={{flex: 1, alignItems: 'center'}}
-              name={selected.map(e=>e.id).includes(item.id) ? 'checkcircle' : 'checkcircleo'}
-              color={selected.map(e=>e.id).includes(item.id) ? styles.secondary : styles.gray} />
-          }
-          // right={() => <Text style={{ ...styles.textBig, marginRight: 10 }}>{item.type}</Text>}
         />
+        <View style={{alignItems: 'center', justifyContent: 'center', flex: 0}}>
+          <Icon
+            type='ant-design'
+            style={{flex: 0, alignItems: 'center'}}
+            name={selected.map(e=>e.id).includes(item.id) ? 'checkcircle' : 'checkcircleo'}
+            color={selected.map(e=>e.id).includes(item.id) ? styles.secondary : styles.gray} />
+        </View>
       </TouchableOpacity>
       // <ExerciseCard key={item.id+nanoid()} exercise={item} onPress={() => handleOnPress(item)}/>
     )
@@ -241,10 +263,11 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
         keyExtractor={item => item.id}
       />
     </View>
+    {multipleSelection &&
     <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={{...styles.buttonSlim, fontSize: styles.textBigger.fontSize, backgroundColor: styles.secondary, color: styles.primary, flex: 1, margin: 10}} onPress={() => handleOnSelect(selected)}>{`${translate('accept')} ${selected.length ? `(${selected.length})` : ''}`}</Text>
-      <Text style={{...styles.buttonSlim, fontSize: styles.textBigger.fontSize, backgroundColor: styles.secondary, color: styles.primary, flex: 1, margin: 10}} onPress={handleOnCancel}>{translate('cancel')}</Text>
-    </View>
+      <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={() => handleOnSelect()}>{`${translate('accept')} ${selected.length ? `(${selected.length})` : ''}`}</Text>
+      <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={handleOnCancel}>{translate('cancel')}</Text>
+    </View>}
     </>
     );
 }

@@ -13,8 +13,11 @@ export const translations = {
     language: 'Language:',
     closeSession: 'Close session',
 
+    // Navigation
     previous: 'Previous',
     next: 'Next',
+
+    // Actions
     cancel: 'Cancel',
     accept: 'Accept',
     select: 'Select',
@@ -23,12 +26,15 @@ export const translations = {
     save: 'Save',
     edit: 'Edit',
     delete: 'Delete',
+    clear: 'Clear',
 
     // Screens
     home: 'Home',
     workout: 'Workout',
     sessions: 'Sessions',
     routines: 'Routines',
+    favorites: 'Favorites',
+    all: 'All',
 
     routineName: 'Routine name',
 
@@ -83,23 +89,24 @@ export const translations = {
     durationShort: 'Dur.',
     restShort: 'Rest',
 
-    // Body zones
-    'Upper Legs': 'Upper Legs',
-    'Lower Legs': 'Lower Legs',
-    'Chest': 'Chest',
-    'Back': 'Back',
-    'Shoulders': 'Shoulders',
-    'Biceps': 'Biceps',
-    'Triceps': 'Triceps',
-    'Abs': 'Abs',
-    'Forearms': 'Forearms',
-    'Calves': 'Calves',
-    'Glutes': 'Glutes',
-    'Hamstrings': 'Hamstrings',
-    'Quadriceps': 'Quadriceps',
-    'Trapezius': 'Trapezius',
-    'Latissimus Dorsi': 'Latissimus Dorsi',
-    'Deltoids': 'Deltoids',
+    // // Body zones
+    // 'Upper Legs': 'Upper Legs',
+    // 'Lower Legs': 'Lower Legs',
+    // 'Chest': 'Chest',
+    // 'Back': 'Back',
+    // 'Shoulders': 'Shoulders',
+    // 'Biceps': 'Biceps',
+    // 'Triceps': 'Triceps',
+    // 'Abs': 'Abs',
+    // 'Forearms': 'Forearms',
+    // 'Calves': 'Calves',
+    // 'Glutes': 'Glutes',
+    // 'Hamstrings': 'Hamstrings',
+    // 'Quadriceps': 'Quadriceps',
+    // 'Trapezius': 'Trapezius',
+    // 'Latissimus Dorsi': 'Latissimus Dorsi',
+    // 'Deltoids': 'Deltoids',
+    // 'Full': 'Full',
     
     bodyZones: ['Upper Legs', 'Lower Legs', 'Chest', 'Back', 'Shoulders', 'Biceps', 'Tricep', 'Abs', 'Forearms', 'Glutes'],
 
@@ -150,8 +157,11 @@ export const translations = {
     language: 'Idioma:',
     closeSession: 'Cerrar sesión',
 
+    // Navigation
     previous: 'Anterior',
     next: 'Siguiente',
+
+    // Actions
     cancel: 'Cancelar',
     accept: 'Aceptar',
     select: 'Seleccionar',
@@ -160,12 +170,15 @@ export const translations = {
     save: 'Guardar',
     edit: 'Editar',
     delete: 'Eliminar',
+    clear: 'Limpiar',
 
     // Screens
     home: 'Inicio',
     workout: 'Entreno',
     sessions: 'Sesiones',
     routines: 'Rutinas',
+    favorites: 'Favoritos',
+    all: 'Todo',
 
     routineName: 'Nombre de la rutina',
 
@@ -220,23 +233,24 @@ export const translations = {
     durationShort: 'Dur.',
     restShort: 'Desc.',
 
-    // Body zones
-    'Upper Legs': 'Muslos',
-    'Lower Legs': 'Pantorrillas',
-    'Chest': 'Pecho',
-    'Back': 'Espalda',
-    'Shoulders': 'Hombros',
-    'Biceps': 'Bíceps',
-    'Triceps': 'Tríceps',
-    'Abs': 'Abdominales',
-    'Forearms': 'Antebrazos',
-    'Calves': 'Pantorrillas',
-    'Glutes': 'Glúteos',
-    'Hamstrings': 'Isquiosurales',
-    'Quadriceps': 'Cuádriceps',
-    'Trapezius': 'Trapecio',
-    'Latissimus Dorsi': 'Dorsal ancho',
-    'Deltoids': 'Deltoides',
+    // // Body zones
+    // 'Upper Legs': 'Muslos',
+    // 'Lower Legs': 'Pantorrillas',
+    // 'Chest': 'Pecho',
+    // 'Back': 'Espalda',
+    // 'Shoulders': 'Hombros',
+    // 'Biceps': 'Bíceps',
+    // 'Triceps': 'Tríceps',
+    // 'Abs': 'Abdominales',
+    // 'Forearms': 'Antebrazos',
+    // 'Calves': 'Pantorrillas',
+    // 'Glutes': 'Glúteos',
+    // 'Hamstrings': 'Isquiosurales',
+    // 'Quadriceps': 'Cuádriceps',
+    // 'Trapezius': 'Trapecio',
+    // 'Latissimus Dorsi': 'Dorsal ancho',
+    // 'Deltoids': 'Deltoides',
+    // 'Full': 'Completo',
 
     bodyZones: ['Muslos', 'Pantorrillas', 'Pecho', 'Espalda', 'Hombros', 'Bíceps',
                 'Tríceps', 'Abdominales', 'Antebrazos', 'Glúteos'],

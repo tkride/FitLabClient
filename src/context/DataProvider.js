@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import { customAlphabet } from 'nanoid/non-secure'
-import { getExercises, getRoutines, getSessions } from '../Services/api';
+import { getExercises, getRoutines, getSessions, addFavorites, deleteFavorites } from '../Services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DataContext = createContext();
@@ -27,6 +27,34 @@ export const DataProvider = ({ children }) => {
 
   const loadSessions = (sessions) => {
     setSessions(sessions);
+  };
+
+  const addFavorite = async (favorite) => {
+    const type = Object.keys(favorite)[0];
+    const id = Object.values(favorite)[0];
+    try {
+      const res = await addFavorites({user: user.username, type, id});
+      if(res < 1) throw new Error('addFavorite error: ', res);
+      return res;
+    }
+    catch (error) {
+      console.log('addFavorite error: ', error);
+      return false;
+    }
+  };
+
+  const deleteFavorite = async (favorite) => {
+    try {
+      const type = Object.keys(favorite)[0];
+      const id = Object.values(favorite)[0];
+      const res = await deleteFavorites({user: user.username, type, id});
+      if(res < 1) throw new Error('deleteFavorite error: ', res);
+      return res;
+    }
+    catch (error) {
+      console.log('deleteFavorite error: ', error);
+      return false;
+    }
   };
 
   const loadUserInfo = async (username) => {
@@ -83,6 +111,8 @@ export const DataProvider = ({ children }) => {
     saveToStorage,
     loadFromStorage,
     removeFromStorage,
+    addFavorite,
+    deleteFavorite,
   };
 
   return (

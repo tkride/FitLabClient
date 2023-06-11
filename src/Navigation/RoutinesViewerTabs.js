@@ -11,44 +11,40 @@ import RoutinesAnalyticsMusclesScreen from '../Screens/RoutinesAnalyticsMusclesS
 import RoutinesAnalyticsStack from './RoutinesAnalyticsStack';
 import RoutinesAnalyticsTypesTabs from './RoutinesAnalyticsTypesTabs';
 import { useEffect } from 'react';
-import RoutinesViewerTabs from './RoutinesViewerTabs';
 
 const Tab = createMaterialTopTabNavigator();
 const ICON_SIZE = 15;
 
-export default function RoutinesTabs() {
+export default function RoutinesViewerTabs() {
     const { styles } = useTheme();
     const { translate } = useTranslator();
 
     return (
       <>
-        <Tab.Navigator screenOptions={styles.navigatorTop}>
+        <Tab.Navigator 
+          screenOptions={{...styles.navigatorTop, tabBarStyle: { height: 40 }}}
+          initialRouteName={translate('favorites')}
+        >
           <Tab.Screen
-            name={`${translate('visualize')}`}
-            // component={RoutinesViewerStack}
-            component={RoutinesViewerTabs}
+            name={`${translate('favorites')}`}
+            component={RoutinesViewerStack}
+            initialParams={{filter: { favorite: true }}}
             options={{
               tabBarIcon: ({ color }) => (
-                <Icon type='material-community' name="eye" size={ICON_SIZE} color={color} />
+                <Icon type='material-community' name="heart" size={ICON_SIZE} color={color} />
               ),
+              tabBarLabel: () => null,
             }}
           />
           <Tab.Screen
-            name={`${translate('analyze')}`}
-            component={RoutinesAnalyticsStack}
+            name={`${translate('all')}`}
+            component={RoutinesViewerStack}
+            initialParams={{ favorite: false }}
             options={{
               tabBarIcon: ({ color }) => (
-                <Icon name="bar-chart" size={ICON_SIZE} color={color} />
+                <Icon name="all-inclusive" size={ICON_SIZE} color={color} />
               ),
-            }}
-          />
-          <Tab.Screen
-            name={`${translate('create')}`}
-            component={CreateRoutineScreen}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <Icon name="add" size={ICON_SIZE} color={color} />
-              ),
+              tabBarLabel: () => null,
             }}
           />
         </Tab.Navigator>

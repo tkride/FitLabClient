@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 const Tab = createMaterialTopTabNavigator();
 const ICON_SIZE = 15;
 
-export default function RoutinesAnalyticsTabs({ navigation, route }) {
+export default function RoutinesAnalyticsTypesTabs({ navigation, route }) {
     const { styles } = useTheme();
     const { language, translate } = useTranslator();
     const { routine } = route.params;

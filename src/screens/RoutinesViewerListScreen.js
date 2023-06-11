@@ -1,22 +1,35 @@
 // HomeScreen.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import ScreenTitle from '../Components/ScreenTitle';
 import { useTheme } from '../context/ThemeProvider';
+import { useData } from '../context/DataProvider';
 import RoutineBrowser from '../Components/RoutineBrowser';
+// import { useFocusEffect } from '@react-navigation/native';
 
-export default function RoutinesViewerListScreen({ navigation }) {
+export default function RoutinesViewerListScreen({navigation, route}) {
   const { styles } = useTheme();
-
-  handleOnPressRoutine = (routine) => {
-    console.log('handleOnSelectRoutine', routine);
-    navigation.navigate('Días', { routine });
+  const { routines } = useData();
+  const { filter } = route?.params ?? {filter: {}};
+  // const { favorite } = route?.params ?? {favorite: false};
+  
+  useEffect(() => {
+    console.log('<<<<>>>>>   ', route?.params);
+    console.log('..... ', {filter});
+  }, [routines]);
+  
+  handleOnSelectRoutine = (routines) => {
+    console.log('handleOnSelectRoutine', routines[0]);
+    navigation.navigate('Días', { routine: routines[0] });
   };
 
   return (
     <View style={styles.container}>
-      {/* <RoutineBrowser navigation={navigation} destionation={'Días'} /> */}
-      <RoutineBrowser onPress={handleOnPressRoutine} />
+      <RoutineBrowser
+        showFavorites={true}
+        // filter={favorite ? {favorite} : {}}
+        filter={{filter}}
+        onSelect={handleOnSelectRoutine}
+      />
     </View>
   );
 }

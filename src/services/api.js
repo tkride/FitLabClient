@@ -227,4 +227,40 @@ export const getTranslations = async (user) => {
   const response = await fetch(request, { method, headers, body });
   const data = await response.json();
   return data;
-}
+};
+
+// Favorites
+
+// export const getFavorites = async (user) => {
+//   let request = Config.REQUESTS.FAVORITES;
+//   const method = Config.METHODS.POST;
+//   const headers = Config.HEADERS;
+//   const body = JSON.stringify({ user });
+//   const response = await fetch(request, { method, headers, body });
+//   const data = await response.json();
+//   return data;
+// };
+
+export const addFavorites = async ({user, type, id}) => {
+  console.log('addFavorites: ', user, type, id);
+  
+  let request = Config.REQUESTS.FAVORITES;
+  const method = Config.METHODS.POST;
+  const headers = Config.HEADERS;
+  const body = JSON.stringify({ user, type, id });
+  const response = await fetch(request, { method, headers, body });
+  const data = await response.json();
+  return data.res;
+};
+
+export const deleteFavorites = async ({user, type, id}) => {
+  console.log('deleteFavorites: ', user, type, id);
+
+  let request = Config.REQUESTS.FAVORITES;
+  const method = Config.METHODS.DELETE;
+  const headers = Config.HEADERS;
+  const body = JSON.stringify({ user, type, id });
+  const response = await fetch(request, { method, headers, body });
+  const data = await response.json();
+  return data.res;
+};

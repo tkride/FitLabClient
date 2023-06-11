@@ -10,7 +10,7 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useTheme } from '../context/ThemeProvider';
 import { useData } from '../context/DataProvider';
 import { useTranslator } from '../context/TranslatorProvider';
@@ -45,8 +45,8 @@ export default function RoutineNew({ onCreate }) {
 
   const AddExercise = (
     <View style={{flexDirection: 'row'}}>
-      <Icon name='add' color={styles.primary}/>
-      <Text style={{...styles.textBigger, marginLeft: 10, color: styles.primary}}>{translate('exercise')}</Text>
+      <Icon name='add' color={styles.buttonSlim.color}/>
+      <Text style={{...styles.textBigger, marginLeft: 10, color: styles.buttonSlim.color}}>{translate('exercise')}</Text>
     </View>
   );
 
@@ -70,6 +70,9 @@ export default function RoutineNew({ onCreate }) {
     console.log('handleDeleteDay', day);
     const currentDays = routineDays;
     currentDays.splice(day.id - 1, 1);
+    const newDayExercises = {daysExercises};
+    delete newDayExercises[day.name];
+    setDaysExercises(newDayExercises);
     setRoutineDays([...currentDays]);
   };
 
@@ -93,7 +96,7 @@ export default function RoutineNew({ onCreate }) {
   const handleOnPressExercise = (exercises) => {
     console.log('handleOnPressExercise', exercises);
     setShowExerciseBrowser(false);
-    let newExercise = {...exercises};
+    // let newExercise = {...exercises};
     //   id: exercise.id,
     //   name: exercise.name,
     //   description: exercise.description,
@@ -112,6 +115,8 @@ export default function RoutineNew({ onCreate }) {
     console.log('currentExercises', currentExercises);
     // daysExercises[currentDay] = [...currentExercises, newExercise];
     daysExercises[currentDay] = [...currentExercises, ...exercises];
+    console.log('exercises', exercises);
+    
     setDaysExercises({...daysExercises});
   };
   
@@ -144,104 +149,64 @@ export default function RoutineNew({ onCreate }) {
           onCancel={() => setShowExerciseBrowser(false)}
         />
         : 
-      <>
-        <TextInputCustom
-          style={{margin: 15}}
-          onChangeText={(text) => setRoutineName(text)}
-          value={routineName}
-          placeholderTextColor={styles.placeholderText}
-          placeholder={translate('routineName')}
-        />
-        {routineDays.map((item) => {          
-          return (
-          <Card key={item.id+nanoid()} style={styles.card}>
-            <Card.Content>
-              <>
-                <View style={{ flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between'}}>
-                  {/* <TextEditableModal style={{...styles.textBigger, color: styles.secondary, textDecorationLine: 'underline', flex: 1}} text={item.name} /> */}
-                  <TextEditable style={{...styles.textBigger, color: styles.secondary, flex: 1}} text={item.name} />
-                  <Button
-                    style={{...styles.buttonSlim, flex: 0}}
-                    title={<Icon name='close' color={styles.grayHeader}/>}
-                    onPress={() => handleDeleteDay(item)}
-                  />
-                  {/* <TouchableOpacity style={{flex: 0}} onPress={() => handleDeleteDay(item)}>
-                    <Icon name='close' color={styles.grayHeader}/>
-                  </TouchableOpacity> */}
-                </View>
-                {daysExercises[item.name]?.map((exercise, index) => (
-                  // <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                  //   <Text style={{...styles.textBigger, margin: 15}}>{translate(exercise.name)}</Text>
-                  //   <TouchableOpacity onPress={() => handleDeleteExercise(item, index)}>
-                  //     <Icon name='delete' color='red'/>
-                  //   </TouchableOpacity>
-                  // </View>
-                  <View key={exercise.id+nanoid()} style={{ flexDirection: 'column' }}>
-                    <View style={{ flexDirection: 'row', maxHeight: 65, justifyContent: 'space-between', alignItems: 'center' }}>
-                      <ExerciseCard styleContainer={{flex: 9}} styleText={styles.textBigger}  key={exercise.id+nanoid()} exercise={exercise} onPress={() => handleConfigExercise(item, index)}/>
-                      <TouchableOpacity style={{flex: 1}} onPress={() => handleDeleteExercise(item, index)}>
-                        <Icon name='delete' color={styles.error.color}/>
-                      </TouchableOpacity>
+        <>
+          <TextInputCustom
+            style={{margin: 15}}
+            onChangeText={(text) => setRoutineName(text)}
+            value={routineName}
+            placeholderTextColor={styles.placeholderText}
+            placeholder={translate('routineName')}
+          />
+          <ScrollView style={{...styles.scrollView, height: '80%'}}>
+            {routineDays.map((item) => {          
+              return (
+              <Card key={item.id+nanoid()} style={styles.card}>
+                <Card.Content>
+                  <>
+                    <View style={{ flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between'}}>
+                      {/* <TextEditableModal style={{...styles.textBigger, color: styles.secondary, textDecorationLine: 'underline', flex: 1}} text={item.name} /> */}
+                      <TextEditable style={{...styles.textBigger, color: styles.secondary, flex: 1}} text={item.name} />
+                      <Button
+                        style={{...styles.buttonSlim, backgroundColor: styles.primary, flex: 0}}
+                        title={<Icon name='close' color={styles.grayHeader}/>}
+                        onPress={() => handleDeleteDay(item)}
+                      />
                     </View>
-                  </View>
-                ))}
+                    {daysExercises[item.name]?.map((exercise, index) => (
+                      <View key={exercise.id+nanoid()} style={{ flexDirection: 'column' }}>
+                        <View style={{ flexDirection: 'row', maxHeight: 65, justifyContent: 'space-between', alignItems: 'center' }}>
+                          <ExerciseCard styleContainer={{flex: 9}} styleText={styles.textBigger}  key={exercise.id+nanoid()} exercise={exercise} onPress={() => handleConfigExercise(item, index)}/>
+                          <TouchableOpacity style={{flex: 1}} onPress={() => handleDeleteExercise(item, index)}>
+                            <Icon name='delete' color={styles.error.color}/>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    ))}
 
-                <Button
-                  style={{...styles.buttonSlim, backgroundColor: styles.secondary}}
-                  styleText={{color: styles.primary}}
-                  title={AddExercise}
-                  onPress={() => handleAddExercise(item)}
-                />
-              </>
-            </Card.Content>
-            {/* <Card.Actions>
-              <TouchableOpacity
-                style={{borderRadius: 50, backgroundColor: styles.secondary, padding: 5, margin: 5 }}
-                onPress={() => handleAddExercise(item)}
-              >
-                <Icon name='add' color={styles.primary}/>
-              </TouchableOpacity>
-            </Card.Actions> */}
-          </Card>
-        )})}
-        {/* <FlatList
-          data={routineDays}
-          renderItem={({item}) => (
-            <View style={{ flexDirection: 'column', margin: 15 }}>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text style={styles.textBigger}>{item.name}</Text>
-                <TouchableOpacity onPress={() => handleAddExercise(item)}>
-                  <Icon name='add' color='red'/>
-                </TouchableOpacity>
-              </View>
-              <FlatList
-                data={daysExercises[item.name] || []}
-                renderItem={({item, index}) => (
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{...styles.textBig, margin: 15}}>{item.name}</Text>
-                    <TouchableOpacity onPress={() => handleDeleteExercise(item, index)}>
-                      <Icon name='delete' color='red'/>
-                    </TouchableOpacity>
-                  </View>
-                )}
-                keyExtractor={item => `${item.id} ${nanoid()}`}
-              />
-            </View>
-          )}
-          keyExtractor={item => `${item.id} ${nanoid()}`}
-        /> */}
-        <Button
-          style={{...styles.buttonSlim, margin: 10}}
-          styleText={{color: styles.secondary}}
-          title={AddDay}
-          onPress={handleAddDay}
-        />
-        
-        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{...styles.button, flex: 1, margin: 10}} onPress={handleCreateRoutine}>{translate('create')}</Text>
-          <Text style={{...styles.button, flex: 1, margin: 10}} onPress={handleDeleteRoutineData}>{translate('delete')}</Text>
-        </View>
-      </>}
-    </View>
+                    <Button
+                      style={{...styles.buttonSlim, margin: 10}}
+                      styleText={{color: styles.primary}}
+                      title={AddExercise}
+                      onPress={() => handleAddExercise(item)}
+                    />
+                  </>
+                </Card.Content>
+              </Card>
+            )})}
+          </ScrollView>
+          <Button
+            style={{...styles.buttonSlim, backgroundColor: styles.primary, color: styles.secondary, margin: 10}}
+            styleText={{color: styles.secondary}}
+            title={AddDay}
+            onPress={handleAddDay}
+          />
+          
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={handleCreateRoutine}>{translate('create')}</Text>
+            <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={handleDeleteRoutineData}>{translate('clear')}</Text>
+          </View>
+        </>
+      }
+      </View>
   );
 }

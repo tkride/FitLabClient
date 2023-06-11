@@ -30,7 +30,7 @@ const LoginScreen = ({user, onLogin}) => {
   const [autoLogin, setAutoLogin] = useState(false);
 
   useEffect(() => {
-    console.log('user', user);
+    console.log('LoginScreen: useEffect: user:', user);
     
     if(user) {
       const { username: storedUsername, password: storedPassword, rememberMe: storedRememberMe } = user;
@@ -38,6 +38,7 @@ const LoginScreen = ({user, onLogin}) => {
         setUsername(storedUsername);
         setPassword(storedPassword);
         setRememberMe(storedRememberMe);
+        loadUser(user);
         setAutoLogin(true);
       }
     }

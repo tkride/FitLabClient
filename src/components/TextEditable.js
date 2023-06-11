@@ -22,6 +22,7 @@ export default function TextEditable({ style={}, text, onSave, onCancel }) {
   };
 
   const handleOnCancel = () => {
+    console.log('handleOnCancel');
     setModalVisible(false);
     setEditedText(text);
     if(onCancel) onCancel();
@@ -42,6 +43,8 @@ export default function TextEditable({ style={}, text, onSave, onCancel }) {
           value={editedText}
           onChangeText={setEditedText}
           onSubmitEditing={handleSubmit}
+          onEndEditing={handleOnCancel}
+          onBlur={handleOnCancel}
         />
         :
         <TouchableOpacity onPress={() => setModalVisible(true)}>

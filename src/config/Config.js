@@ -9,6 +9,7 @@ const Config = {
     EXERCISE_LOGS: BASE_URL + '/exercise-logs',
     EXERCISE_NOTES: BASE_URL + '/exercise-notes',
     TRANSLATIONS: BASE_URL + '/translations',
+    FAVORITES: BASE_URL + '/favorites',
     USERS: BASE_URL + '/users',
     LOGIN: BASE_URL + '/login',
     REGISTER: BASE_URL + '/register',

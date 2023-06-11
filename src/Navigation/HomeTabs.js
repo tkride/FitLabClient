@@ -23,7 +23,7 @@ export default function HomeTabs({navigation, user, onLogout}) {
 
   return (
     <>
-      <Tab.Navigator screenOptions={styles.navigatorBottom}>
+      <Tab.Navigator screenOptions={styles.navigatorBottom} initialRouteName={translate('routines')}>
         <Tab.Screen
           name={`${translate('home')}`}
           component={HomeScreen}
@@ -53,7 +53,6 @@ export default function HomeTabs({navigation, user, onLogout}) {
             headerTitle: 'Rutinas',
             tabBarIcon: ({ color, size }) =>
             (<Icon type='material-community' name="dumbbell" color={color} size={size} />)
-
           }}
         />
         <Tab.Screen

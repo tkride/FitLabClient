@@ -17,8 +17,8 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={ styles.container }>
-      {/* <Text style={styles.text}>Bienvenido a Fit Lab</Text> */}
-      <ExerciseBrowser />
+      <Text style={styles.text}>Bienvenido a Fit Lab</Text>
+      {/* <ExerciseBrowser /> */}
       {/* <TableCustom /> */}
       {/* <SessionAnalysis /> */}
     </SafeAreaView>

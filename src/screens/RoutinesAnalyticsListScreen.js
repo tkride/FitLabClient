@@ -1,22 +1,22 @@
 // HomeScreen.js
 import React from 'react';
 import { View } from 'react-native';
-import ScreenTitle from '../Components/ScreenTitle';
 import { useTheme } from '../context/ThemeProvider';
+import { useData } from '../context/DataProvider';
 import RoutineBrowser from '../Components/RoutineBrowser';
 
 export default function RoutinesAnalyticsListScreen({ navigation }) {
   const { styles } = useTheme();
+  const { routines } = useData();
 
-  handleOnPressRountine = (routine) => {
-    console.log('handleOnSelectRoutine', routine);
-    navigation.navigate('AnalyticsTabs', { routine });
+  handleOnSelectRoutine = (routines) => {
+    console.log('handleOnSelectRoutine', routines);
+    navigation.navigate('AnalyticsTabs', { routine: routines[0] });
   };
   
   return (
     <View style={styles.container}>
-      <RoutineBrowser onPress={handleOnPressRountine} />
-      {/* <RoutineBrowser navigation={navigation} destination={'AnalyticsTabs'} /> */}
+      <RoutineBrowser onSelect={handleOnSelectRoutine} />
     </View>
   );
 }

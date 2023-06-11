@@ -21,14 +21,13 @@ const Navigator = () => {
 
   const loadUserData = async () => {
     const loadedUserData = await loadFromStorage(['userData']);
-    console.log('loadedUserData', loadedUserData);
     if(loadedUserData) {
       const { userData } = loadedUserData;
       const storedUserData = JSON.parse(userData);
       console.log('storedUserData', storedUserData);
       setUserData(storedUserData);
+      setUserDataLoaded(true);
     }
-    setUserDataLoaded(true);
   }
   
   useEffect(() => {
@@ -53,6 +52,7 @@ const Navigator = () => {
 
     setUserData({ name: userData.username, email: 'rubenprojectsoftware@gmail.com'});
     setLoggedIn(true);
+    setUserDataLoaded(true);
   };
 
   const handleLogout = () => {

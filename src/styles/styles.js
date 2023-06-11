@@ -117,7 +117,7 @@ const layout = {
     padding: 2,
     borderRadius: 50,
     // Font
-    fontSize: 22,
+    fontSize: 18,
     // fontWeight: 'bold',
     textAlign: 'center',
     alignItems: 'center',
@@ -336,8 +336,8 @@ const light = {
     color: grayHeaderLight,
   },
   buttonSlim: {
-    backgroundColor: secondaryLight,
-    color: primaryLight,
+    backgroundColor: primaryLight,
+    color: secondaryLight,
   },
   text: {
     color: textLight,
@@ -470,8 +470,8 @@ const dark = {
     color: grayHeaderDark,
   },
   buttonSlim: {
-    backgroundColor: primaryDark,
-    color: secondaryDark,
+    backgroundColor: secondaryDark,
+    color: primaryDark,
   },
   button2: {
     backgroundColor: secondaryDark,
