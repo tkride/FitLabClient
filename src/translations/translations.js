@@ -12,6 +12,13 @@ export const translations = {
     selectLanguage: 'Select Language:',
     language: 'Language:',
     closeSession: 'Close session',
+    deleteRoutineMsgTitle: 'Delete routine',
+    deleteRoutineMsgRoutine: 'Routine:',
+    deleteDayMsgTitle: 'Delete day',
+    deleteDayMsgDay: 'Day:',
+    deleteExerciseMsgTitle: 'Delete exercise',
+    deleteExerciseMsgExerciseNumber: 'Exercise number: ',
+    deleteExerciseMsgDay: 'Day: ',
 
     // Navigation
     previous: 'Previous',
@@ -156,6 +163,14 @@ export const translations = {
     selectLanguage: 'Selecciona Idioma:',
     language: 'Idioma:',
     closeSession: 'Cerrar sesión',
+    deleteRoutineMsgTitle: 'Eliminar rutina',
+    deleteRoutineMsgRoutine: 'Rutina:',
+    deleteDayMsgTitle: 'Eliminar día',
+    deleteDayMsgDay: 'Día:',
+    deleteExerciseMsgTitle: 'Eliminar ejercicio',
+    deleteExerciseMsgExerciseNumber: 'Número de ejercicio:',
+    deleteExerciseMsgDay: 'Del día:',
+
 
     // Navigation
     previous: 'Anterior',

@@ -11,13 +11,17 @@ import Config from '../config/Config';
 import { requestImage } from '../Services/api';
 import { Image } from '@rneui/themed';
 import ExerciseBrowser from '../Components/ExerciseBrowser';
+import ModalConfirm from '../Components/Text/ModalConfirm';
 
 export default function HomeScreen() {
   const { styles } = useTheme();
 
   return (
     <SafeAreaView style={ styles.container }>
-      <Text style={styles.text}>Bienvenido a Fit Lab</Text>
+      <View style={styles.view}>
+        <Text style={styles.title} onPress={() => setShowModal(true)}>Bienvenido a Fit Lab</Text>
+        <Text style={styles.subtitle}>Tu entrenador personal</Text>
+      </View>
       {/* <ExerciseBrowser /> */}
       {/* <TableCustom /> */}
       {/* <SessionAnalysis /> */}

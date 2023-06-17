@@ -7,14 +7,15 @@ import { useTheme } from '../context/ThemeProvider';
 import { useTranslator } from '../context/TranslatorProvider';
 import { useData } from '../context/DataProvider';
 import { List, Avatar } from 'react-native-paper';
-import SearchBar from './TextInputCustom';
+import SearchBar from './Text/TextInputCustom';
 import TagsList from './TagsList';
 import Accordion from './Accordion';
 import { Icon } from '@rneui/base';
 import ExerciseCard from './ExerciseCard';
-import TextEditableModal from './TextEditableModal';
+import ModalTextEditable from './Text/ModalTextEditable';
+import ScrollableList from './ScrollableList';
 
-export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleSelection=false, selectedExercises=[] }) {
+export default function ExerciseBrowser({ onSelect, onCancel, multipleSelection=false, selectedExercises=[] }) {
   const { styles } = useTheme();
   const { translate } = useTranslator();
   const { exercises, nanoid } = useData();
@@ -26,6 +27,7 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
   const [filteredExercises, setFilteredExercises] = useState(exercises);
   const [images, setImages] = useState({});
   const [selected, setSelected] = useState(selectedExercises);
+  const [onlySelectedMarked, setOnlySelectedMarked] = useState(false);
 
   useEffect(() => {
     setFilteredExercises(exercises);
@@ -45,11 +47,24 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
     // console.log({filteredExercises});
   }, [exercises, filteredExercises]);
 
+  useEffect(() => {
+    if (selectedExercises.length > 0) {
+      setSelected(selectedExercises);
+      setOnlySelectedMarked(true);
+      updateTagsMarked({onlySelected: true});
+    }
+  }, [selectedExercises]);
+
+  useEffect(() => {
+    if (multipleSelection && onlySelectedMarked) {
+      updateTagsMarked({onlySelected: onlySelectedMarked});
+    }
+  }, [selected]);
+
   const handleSearch = (text) => {
     console.log('ExerciseBrowser COMPONENT: handleSearch', text);
     setTextSearch(text);
-    const filtered = updateTagsMarked({text});
-    setFilteredExercises(filtered);
+    updateTagsMarked({text});
   };
 
   const handleOnCancelSearch = () => {
@@ -59,29 +74,25 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
   const handleOnTagZones = (tags) => {
     console.log('ExerciseBrowser COMPONENT: handleFilter: handleOnTagZones', tags);
     setZonesMarked(tags);
-    const filtered = updateTagsMarked({zones: tags});
-    setFilteredExercises(filtered);
+    updateTagsMarked({zones: tags});
   };
 
   const handleOnTagMainMuscles = (tags) => {
     console.log('ExerciseBrowser COMPONENT: handleFilter: handleOnTagMainMuscles', tags);
     setMainMusclesMarked(tags);
-    const filtered = updateTagsMarked({mainMuscles: tags});
-    setFilteredExercises(filtered);
+    updateTagsMarked({mainMuscles: tags});
   };
 
   const handleOnTagSecondaryMuscles = (tags) => {
     console.log('ExerciseBrowser COMPONENT: handleFilter: handleOnTagSecondaryMuscles', tags);
     setSecondaryMusclesMarked(tags);
-    const filtered = updateTagsMarked({secondaryMuscles: tags});
-    setFilteredExercises(filtered);
+    updateTagsMarked({secondaryMuscles: tags});
   };
 
   const handleOnTagEquipment = (tags) => {
     console.log('ExerciseBrowser COMPONENT: handleFilter: handleOnTagEquipment', tags);
     setEquipmentMarked(tags);
-    const filtered = updateTagsMarked({equipment: tags});
-    setFilteredExercises(filtered);
+    updateTagsMarked({equipment: tags});
   };
 
   const updateTagsMarked = ({
@@ -89,12 +100,20 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
     zones=zonesMarked,
     mainMuscles=mainMusclesMarked,
     secondaryMuscles=secondaryMusclesMarked,
-    equipment=equipmentMarked}) => {
+    equipment=equipmentMarked,
+    onlySelected=onlySelectedMarked
+  }) => {
+    if(onlySelected) {
+      setFilteredExercises(selected);
+      return selected;
+    }
+
     let filtered = zones ? handleFilter(exercises, 'zone', zones) : exercises;
     filtered = mainMuscles ? handleFilter(filtered, 'mainMuscles', mainMuscles) : filtered;
     filtered = secondaryMuscles ? handleFilter(filtered, 'secondaryMuscles', secondaryMuscles) : filtered;
     filtered = equipment ? handleFilter(filtered, 'equipment', equipment) : filtered;
     filtered = text ? handleFilter(filtered, 'name', text.split(' ')) : filtered;
+    setFilteredExercises(filtered);
     return filtered;
   };
 
@@ -114,10 +133,10 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
   else {
     return data;
   }
-};
+  };
 
   const handleOnPressExercise = (exercise) => {
-    console.log('------ ExerciseBrowser COMPONENT: handleOnPress: ', exercise);
+    // console.log('ExerciseBrowser COMPONENT: handleOnPressExercise: ', selected);
     if(multipleSelection) {
       const index = selected.findIndex(e => e.id === exercise.id);
       if(index >= 0) {
@@ -126,18 +145,18 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
         setSelected(newSelected);
       }
       else setSelected([...selected, exercise]);
-      console.log('+++++++++++++++++++++++++++++++++++');
-      console.log('--------------------------------- ', [...selected, exercise]);
-      console.log('+++++++++++++++++++++++++++++++++++');
-      
+
+      if(onlySelectedMarked) {
+        updateTagsMarked({onlySelected: onlySelectedMarked});
+      }
     }
     else handleOnSelect(exercise);
   };
 
   const handleOnSelect = (exercise) => {
-    console.log('ExerciseBrowser COMPONENT: handleOnSelect: ', exercise);
+    // console.log('ExerciseBrowser COMPONENT: handleOnSelect: ', exercise);
     const ret = exercise ? [exercise] : selected;
-    console.log('ExerciseBrowser COMPONENT: handleOnSelect: ', ret);
+    // console.log('ExerciseBrowser COMPONENT: handleOnSelect: ', ret);
     if(onSelect) onSelect(ret);
   };
 
@@ -166,10 +185,10 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
       </View>
     );
 
-    return (
+    const oldRet = (
       <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'space-between'}} onPress={() => handleOnPressExercise(item)}>
         <List.Item
-        style={{flex: 1}}
+          style={{flex: 1}}
           title={ItemTitle}
           titleStyle={{ ...styles.textBig, color: styles.secondary }}
           description={ItemDescription}
@@ -183,9 +202,32 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
             name={selected.map(e=>e.id).includes(item.id) ? 'checkcircle' : 'checkcircleo'}
             color={selected.map(e=>e.id).includes(item.id) ? styles.secondary : styles.gray} />
         </View>
-      </TouchableOpacity>
-      // <ExerciseCard key={item.id+nanoid()} exercise={item} onPress={() => handleOnPress(item)}/>
-    )
+      </TouchableOpacity> );
+
+      const newRet = (
+      <ExerciseCard
+        key={item.id+nanoid()}
+        styleContainer={{
+          flexDirection: 'row',
+          flex: 1,
+          justifyContent: 'space-between',
+          marginTop: 15,
+          backgroundColor: styles.mainBack}}
+        styleText={{ ...styles.textBig, color: styles.secondary }}
+        exercise={item}
+        description={ItemDescription}
+        selectable={multipleSelection}
+        isSelected={selected.map(e=>e.id).includes(item.id)}
+        onSelect={() => handleOnPressExercise(item)}
+      /> );
+
+    // return oldRet;
+    return newRet;
+  };
+
+  const handleOnOnlySelected = () => {
+    setOnlySelectedMarked(!onlySelectedMarked);
+    updateTagsMarked({onlySelected: !onlySelectedMarked});
   };
 
   return (
@@ -257,16 +299,25 @@ export default function ExerciseBrowser({ onPress, onSelect, onCancel, multipleS
             />
           </View>}
       />
-      <FlatList
+      <ScrollableList
         data={filteredExercises}
+        scrollPosition={10}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
       />
     </View>
     {multipleSelection &&
     <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
       <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={() => handleOnSelect()}>{`${translate('accept')} ${selected.length ? `(${selected.length})` : ''}`}</Text>
       <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={handleOnCancel}>{translate('cancel')}</Text>
+      <View style={{flex: 0.35}}>
+        <Icon
+          type='ant-design'
+          style={{alignItems: 'center'}}
+          name={onlySelectedMarked ? 'checkcircle' : 'checkcircleo'}
+          color={onlySelectedMarked ? styles.secondary : styles.gray}
+          onPress={handleOnOnlySelected}
+        />
+      </View>
     </View>}
     </>
     );

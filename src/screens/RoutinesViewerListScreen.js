@@ -13,12 +13,9 @@ export default function RoutinesViewerListScreen({navigation, route}) {
   // const { favorite } = route?.params ?? {favorite: false};
   
   useEffect(() => {
-    console.log('<<<<>>>>>   ', route?.params);
-    console.log('..... ', {filter});
   }, [routines]);
   
   handleOnSelectRoutine = (routines) => {
-    console.log('handleOnSelectRoutine', routines[0]);
     navigation.navigate('Días', { routine: routines[0] });
   };
 

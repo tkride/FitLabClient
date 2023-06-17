@@ -152,7 +152,22 @@ export default function Exercise({ exercise }) {
 }
 
 /*
-      <Draggable x={20} y={50} renderSize={150} renderColor='black' renderText='A'>
+      <Draggable
+        x={0}
+        minX={0}
+        // maxX={0}
+        y={index*65}
+        minY={0}
+        // maxY={200}
+        onDragRelease={() => handleOnPressRoutine('Torso-Pierna')}
+        renderSize={150}
+        renderColor='transparent'
+      x={20}
+      y={50}
+      renderSize={150}
+      renderColor='black'
+      renderText='A'
+      >
         <TouchableHighlight
           activeOpacity={styles.buttonRoutine.activeOpacity}
           underlayColor={styles.buttonRoutine.underlayColor}

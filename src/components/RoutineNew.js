@@ -1,16 +1,7 @@
 // RoutineNew.js
 
-// Crea una nueva rutina
-// Muestra un formulario para crear una nueva rutina formado por nombre, un icono para agregar días, y dentro de los días un control para agregar ejercicios
-// Al crear una rutina se debe enviar al servidor y actualizar la lista de rutinas
-// Al agregar un día se debe agregar un nuevo día a la rutina
-// Al agregar un ejercicio se debe agregar un nuevo ejercicio al día
-// Al agregar un ejercicio se debe mostrar un modal con un buscador de ejercicios
-// Al seleccionar un ejercicio se debe agregar a la rutina
-
-
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { useTheme } from '../context/ThemeProvider';
 import { useData } from '../context/DataProvider';
 import { useTranslator } from '../context/TranslatorProvider';
@@ -18,12 +9,13 @@ import { useTranslator } from '../context/TranslatorProvider';
 import { createRoutine } from '../Services/api';
 import { Icon } from '@rneui/base';
 import ExerciseBrowser from './ExerciseBrowser';
-import TextInputCustom from './TextInputCustom';
-import { Card, Paragraph } from 'react-native-paper';
-import ExerciseCard from './ExerciseCard';
+import TextInputCustom from './Text/TextInputCustom';
 import Button from './Button';
-import TextEditableModal from './TextEditableModal';
-import TextEditable from './TextEditable';
+// import Draggable from 'react-native-draggable';
+// import { DraxProvider, DraxView } from 'react-native-drax';
+import DayExercisesCard from './DayExercisesCard'; // Importar el nuevo componente
+import ModalConfirm from './Text/ModalConfirm';
+
 
 export default function RoutineNew({ onCreate }) {
   const { styles } = useTheme();
@@ -31,10 +23,11 @@ export default function RoutineNew({ onCreate }) {
   // const { user } = useAuth();
   const { routines, nanoid } = useData();
   const [routineName, setRoutineName] = useState('');
-  const [routineDays, setRoutineDays] = useState([]);
+  const [routineDays, setRoutineDays] = useState({});
   const [currentDay, setCurrentDay] = useState('');
-  const [daysExercises, setDaysExercises] = useState({});
   const [showExerciseBrowser, setShowExerciseBrowser] = useState(false);
+  const [deleteExercise, setDeleteExercise] = useState(null);
+  const [deleteDay, setDeleteDay] = useState(null);
 
   const AddDay = (
     <View style={{flexDirection: 'row'}}>
@@ -43,37 +36,34 @@ export default function RoutineNew({ onCreate }) {
     </View>
   );
 
-  const AddExercise = (
-    <View style={{flexDirection: 'row'}}>
-      <Icon name='add' color={styles.buttonSlim.color}/>
-      <Text style={{...styles.textBigger, marginLeft: 10, color: styles.buttonSlim.color}}>{translate('exercise')}</Text>
-    </View>
-  );
-
   useEffect(() => {
-  }, [routineName, routineDays, daysExercises, showExerciseBrowser]);
+  }, [routineName, routineDays, showExerciseBrowser, deleteExercise]);
 
   const handleAddDay = () => {
     console.log('handleAddDay:', routineDays);
-    const dayId = routineDays.length ? Math.max(...routineDays.map(d=>d.id)) + 1 : 1;
+    const dayId = Object.values(routineDays).length ? Math.max(...Object.values(routineDays).map(d=>d.id)) + 1 : 1;
     let newDay = {
       id: dayId,
       name: `Día ${dayId}`,
       exercises: []
     };
-    console.log([...routineDays, newDay]);
-    // console.log('Max: ', Math.max(routineDays.map(d=>d.id)));
-    setRoutineDays([...routineDays, newDay]);
+    console.log('handleAddDay new:', {...routineDays, newDay});
+    setRoutineDays({...routineDays, [newDay.name]: newDay});
+  };
+
+  const handleConfirmDeleteDay = ({reply, data}) => {
+    setDeleteDay(null);
+    console.log('handleConfirmDeleteDay', reply, data);
+    if(reply) {
+      handleDeleteDay(data);
+    }
   };
 
   const handleDeleteDay = (day) => {
     console.log('handleDeleteDay', day);
-    const currentDays = routineDays;
-    currentDays.splice(day.id - 1, 1);
-    const newDayExercises = {daysExercises};
-    delete newDayExercises[day.name];
-    setDaysExercises(newDayExercises);
-    setRoutineDays([...currentDays]);
+    const currentDays = {...routineDays};
+    delete currentDays[day?.name];
+    setRoutineDays({...currentDays});
   };
 
   const handleAddExercise = (day) => {
@@ -83,41 +73,34 @@ export default function RoutineNew({ onCreate }) {
   };
 
   const handleConfigExercise = (day, exercise, index) => {
-    console.log('handleConfigExercise', day, index);
+    console.log('handleConfigExercise', day, exercise, index);
+  };
+
+  const handleConfirmDeleteExercise = ({reply, data}) => {
+    setDeleteExercise(null);
+    console.log('handleExerciseDeletion', reply, data);
+    if(reply) {
+      const {day, index} = data;
+      handleDeleteExercise(day, index);
+    };
   };
 
   const handleDeleteExercise = (day, index) => {
-    console.log('handleDeleteExercise', day, index);
-    const currentExercises = daysExercises[day.name] || [];
+    const currentExercises = routineDays[day.name].exercises || [];
     currentExercises.splice(index, 1);
-    setDaysExercises({[day.name]: currentExercises});
+    routineDays[day.name].exercises = currentExercises;
+    setRoutineDays({...routineDays});
   };
 
-  const handleOnPressExercise = (exercises) => {
-    console.log('handleOnPressExercise', exercises);
+  const handleOnSelectExercises = (exercises) => {
+    console.log('handleOnPressExercise', exercises.map(e=>e.name));
     setShowExerciseBrowser(false);
-    // let newExercise = {...exercises};
-    //   id: exercise.id,
-    //   name: exercise.name,
-    //   description: exercise.description,
-    //   image: exercise.image,
-    //   video: exercise.video,
-    //   sets: exercise.sets,
-    //   reps: exercise.reps,
-    //   rest: exercise.rest,
-    //   weight: exercise.weight,
-    //   intensity: exercise.intensity
-    // };
     console.log('---------------------------------');
-    console.log('daysExercises', daysExercises);
     console.log('currentDay', currentDay);
-    const currentExercises = daysExercises[currentDay] || [];
-    console.log('currentExercises', currentExercises);
-    // daysExercises[currentDay] = [...currentExercises, newExercise];
-    daysExercises[currentDay] = [...currentExercises, ...exercises];
-    console.log('exercises', exercises);
-    
-    setDaysExercises({...daysExercises});
+    const currentExercises = routineDays[currentDay].exercises || [];
+    currentExercises.push(...exercises);
+    routineDays[currentDay].exercises = currentExercises;
+    setRoutineDays({...routineDays});
   };
   
   const handleCreateRoutine = () => {
@@ -135,17 +118,30 @@ export default function RoutineNew({ onCreate }) {
   const handleDeleteRoutineData = () => {
     console.log('handleDelete');
     setRoutineName('');
-    setRoutineDays([]);
+    setRoutineDays({});
     setCurrentDay({});
-    setDaysExercises({});
   };
+
+  const handleOnReceiveDragDrop = (item, payload, index) => {
+    const dayExercises = routineDays[item.name].exercises || [];
+    const draggedExercise = dayExercises[payload.index];
+  
+    // Removes the item from the array
+    dayExercises.splice(payload.index, 1);
+    // Inserts the dragged item into the array at destination index
+    dayExercises.splice(index, 0, draggedExercise);
+    routineDays[item.name].exercises = dayExercises;
+    setRoutineDays({...routineDays});
+  };
+
+  console.log('routineDays', routineDays);
 
   return (
     <View style={styles.container}>
       {showExerciseBrowser ?
         <ExerciseBrowser
           multipleSelection={true}
-          onSelect={handleOnPressExercise}
+          onSelect={handleOnSelectExercises}
           onCancel={() => setShowExerciseBrowser(false)}
         />
         : 
@@ -157,43 +153,43 @@ export default function RoutineNew({ onCreate }) {
             placeholderTextColor={styles.placeholderText}
             placeholder={translate('routineName')}
           />
-          <ScrollView style={{...styles.scrollView, height: '80%'}}>
-            {routineDays.map((item) => {          
+          {
+            (deleteExercise != null) &&
+            <ModalConfirm
+              title={translate('deleteExerciseMsgTitle')}
+              message={translate(deleteExercise?.day.exercises[deleteExercise?.index].name) + `\n` +
+                       translate('deleteExerciseMsgExerciseNumber') + Number(deleteExercise?.index + 1) + `\n` +
+                       translate('deleteExerciseMsgDay') + deleteExercise?.day?.name}
+              data={deleteExercise}
+              onAccept={(e) => handleConfirmDeleteExercise(e)}
+              onCancel={(e) => setDeleteExercise(null)} />
+          }
+          {
+            (deleteDay != null) &&
+            <ModalConfirm
+              title={translate('deleteDayMsgTitle')}
+              message={`${translate('deleteDayMsgDay')} (${deleteDay?.id}) ${deleteDay?.name}`}
+              data={deleteDay}
+              onAccept={(e) => handleConfirmDeleteDay(e)}
+              onCancel={(e) => setDeleteDay(null)} />
+          }
+          <ScrollView style={{ ...styles.scrollView, height: '80%' }}>
+            {Object.values(routineDays).map((item) => {
               return (
-              <Card key={item.id+nanoid()} style={styles.card}>
-                <Card.Content>
-                  <>
-                    <View style={{ flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between'}}>
-                      {/* <TextEditableModal style={{...styles.textBigger, color: styles.secondary, textDecorationLine: 'underline', flex: 1}} text={item.name} /> */}
-                      <TextEditable style={{...styles.textBigger, color: styles.secondary, flex: 1}} text={item.name} />
-                      <Button
-                        style={{...styles.buttonSlim, backgroundColor: styles.primary, flex: 0}}
-                        title={<Icon name='close' color={styles.grayHeader}/>}
-                        onPress={() => handleDeleteDay(item)}
-                      />
-                    </View>
-                    {daysExercises[item.name]?.map((exercise, index) => (
-                      <View key={exercise.id+nanoid()} style={{ flexDirection: 'column' }}>
-                        <View style={{ flexDirection: 'row', maxHeight: 65, justifyContent: 'space-between', alignItems: 'center' }}>
-                          <ExerciseCard styleContainer={{flex: 9}} styleText={styles.textBigger}  key={exercise.id+nanoid()} exercise={exercise} onPress={() => handleConfigExercise(item, index)}/>
-                          <TouchableOpacity style={{flex: 1}} onPress={() => handleDeleteExercise(item, index)}>
-                            <Icon name='delete' color={styles.error.color}/>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    ))}
-
-                    <Button
-                      style={{...styles.buttonSlim, margin: 10}}
-                      styleText={{color: styles.primary}}
-                      title={AddExercise}
-                      onPress={() => handleAddExercise(item)}
-                    />
-                  </>
-                </Card.Content>
-              </Card>
-            )})}
+                <DayExercisesCard
+                  key={item.id}
+                  day={item}
+                  editable={true}
+                  onPressExercise={handleConfigExercise}
+                  onDeleteDay={() => setDeleteDay(item)}
+                  onAddExercise={handleAddExercise}
+                  onDeleteExercise={(day, index) => setDeleteExercise({day, index})}
+                  onReceiveDragDrop={handleOnReceiveDragDrop}
+                />
+              );
+            })}
           </ScrollView>
+
           <Button
             style={{...styles.buttonSlim, backgroundColor: styles.primary, color: styles.secondary, margin: 10}}
             styleText={{color: styles.secondary}}

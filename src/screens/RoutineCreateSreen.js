@@ -18,7 +18,6 @@ export default function RoutineCreateSreen({ navigation }) {
 
   handleOnCreateRoutine = (routine) => {
     console.log('handleOnCreateRoutine', routine);
-    
   };
   
   return (

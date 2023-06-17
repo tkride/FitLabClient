@@ -8,9 +8,10 @@ const layout = {
     marginTop: 0,
   },
   view: {
-    paddingTop: 5,
-    paddingLeft: 5,
-    paddingRight: 5,
+    margin: 10,
+    // paddingTop: 10,
+    // paddingLeft: 10,
+    // paddingRight: 5,
     alignContent: 'center',
     // justifyContent: 'center',
   },
@@ -23,6 +24,11 @@ const layout = {
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  modalTitle: {
+    margin: 12,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   scrollView: { height: '100%', },
   loginStyle: {
@@ -272,17 +278,17 @@ const mainBackDark = '#000';
 // const secondaryDark = '#03dac5';
 // const grayHeaderDark = '#cbcbcb';
 // const grayDark = '#f0f0f0';
-const primaryDark = '#101010';
+const primaryDark = '#202020';
 const secondaryDark = '#00bfa5';
 const tertiaryDark = '#ffff00';
-const grayHeaderDark = '#d4dddb';
+const grayHeaderDark = '#a4aaab';
 const grayDark = '#373737';
 const cardBackDark = '#121212';
 const cardBackRoutineDark = primaryDark;
 const errorDark = '#d65076';
 
 // const headerTextDark = '#d4dddb';
-// const headerTextDark = grayHeaderDark;
+const headerTextDark = grayHeaderDark;
 const titleTextDark = '#c1c1c1';
 const textDark = '#8a8a8a';
 
@@ -300,6 +306,9 @@ const light = {
   modal: {
     backgroundColor: primaryLight,
     borderColor: grayHeaderLight,
+  },
+  modalTitle: {
+    color: headerTextLight,
   },
   calendarStyle: {
     backgroundColor: primaryLight,
@@ -427,6 +436,9 @@ const dark = {
   modal: {
     backgroundColor: primaryDark,
     borderColor: 'black',
+  },
+  modalTitle: {
+    color: textDark,
   },
   calendarStyle: {
     backgroundColor: primaryDark,
@@ -613,6 +625,7 @@ const stylesDark = {
   container: { ...layout.container, ...dark.container },
   view: { ...layout.view, ...dark.view },
   modal: { ...layout.modal, ...dark.modal },
+  modalTitle: { ...layout.modalTitle, ...dark.modalTitle },
   loginStyle: { ...layout.loginStyle, ...dark.loginStyle },
   cardBack: cardBackDark,
   cardBackRoutine: cardBackRoutineDark,

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import Modal from './Modal';
-import { useTheme } from '../context/ThemeProvider';
-import { useTranslator } from '../context/TranslatorProvider';
-import Button from './Button';
+import Modal from '../Modal';
+import { useTheme } from '../../context/ThemeProvider';
+import { useTranslator } from '../../context/TranslatorProvider';
+import Button from '../Button';
 import { useEffect } from 'react';
 
 export default function TextEditable({ style={}, text, onSave, onCancel }) {

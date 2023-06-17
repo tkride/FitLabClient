@@ -1,17 +1,15 @@
 // RoutineBrowser.js
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableHighlight, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useTheme } from '../context/ThemeProvider';
 import { useTranslator } from '../context/TranslatorProvider';
 import { useData } from '../context/DataProvider';
-import { TouchableOpacity } from 'react-native';
-import TextEditable from './TextEditable';
+import TextEditable from './Text/TextEditable';
 import { Icon } from '@rneui/base';
 import { useFocusEffect } from '@react-navigation/native';
 // import Draggable from 'react-native-draggable';
-// import ScreenTitle from './ScreenTitle';
 
 export default function RoutineBrowser({
   filter={},

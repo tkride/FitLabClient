@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, TouchableOpacity, TextInput } from 'react-native';
-import { useTheme } from '../context/ThemeProvider';
-import { useTranslator } from '../context/TranslatorProvider';
+import { useTheme } from '../../context/ThemeProvider';
+import { useTranslator } from '../../context/TranslatorProvider';
 import { Icon } from '@rneui/base';
 import { useEffect } from 'react';
 
