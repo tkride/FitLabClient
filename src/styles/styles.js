@@ -162,6 +162,10 @@ const layout = {
     // paddingHorizontal: 16,
     fontSize: 16,
   },
+  inputLabel: {
+    fontSize: 16,
+    // borderBottomWidth: 2,
+  },
   tagFilter: {
     padding: 10,
     paddingTop: 2,
@@ -182,14 +186,13 @@ const layout = {
     fontWeight: 'bold',
   },
   card: {
-    marginTop: 5,
-    marginBottom: 5,
-    width: '85%',
-    alignSelf: 'center',
+    margin: 10,
+    padding: 10,
+    // width: '85%',
     // elevation: 4,
     elevation: 0,
     borderWidth: 0,
-    // borderRadius: 5,
+    borderRadius: 5,
     // Font
     fontSize: 18,
     fontWeight: 'bold',
@@ -374,6 +377,10 @@ const light = {
     // borderColor: primaryLight,
     borderColor: secondaryDark,
   },
+  inputLabel: {
+    color: secondaryLight,
+    borderColor: secondaryLight
+  },
   tagFilter: {
     backgroundColor: primaryLight,
     color: headerTextLight,
@@ -515,6 +522,10 @@ const dark = {
     // borderColor: primaryDark,
     borderColor: secondaryDark,
   },
+  inputLabel: {
+    color: secondaryDark,
+    borderColor: secondaryDark
+  },
   tagFilter: {
     backgroundColor: primaryDark,
     color: grayHeaderDark,
@@ -612,6 +623,7 @@ const stylesLight = {
   border: { ...layout.border, ...light.border },
   input: { ...layout.input, ...light.input },
   inputText: { ...layout.inputText, ...light.inputText },
+  inputLabel: { ...layout.inputLabel, ...light.inputLabel },
   tagFilter: { ...layout.tagFilter, ...light.tagFilter },
   selectedTag: { ...layout.selectedTag, ...light.selectedTag },
   placeholderText: light.placeholderText,
@@ -667,6 +679,7 @@ const stylesDark = {
   border: { ...layout.border, ...dark.border },
   input: { ...layout.input, ...dark.input },
   inputText: { ...layout.inputText, ...dark.inputText },
+  inputLabel: { ...layout.inputLabel, ...dark.inputLabel },
   tagFilter: { ...layout.tagFilter, ...dark.tagFilter },
   selectedTag: { ...layout.selectedTag, ...dark.selectedTag },
   placeholderText: dark.placeholderText,

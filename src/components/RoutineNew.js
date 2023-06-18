@@ -15,6 +15,7 @@ import Button from './Button';
 // import { DraxProvider, DraxView } from 'react-native-drax';
 import DayExercisesCard from './DayExercisesCard'; // Importar el nuevo componente
 import ModalConfirm from './Text/ModalConfirm';
+import ExerciseConfiguration from './ExerciseConfiguration';
 
 
 export default function RoutineNew({ onCreate }) {
@@ -26,6 +27,8 @@ export default function RoutineNew({ onCreate }) {
   const [routineDays, setRoutineDays] = useState({});
   const [currentDay, setCurrentDay] = useState('');
   const [showExerciseBrowser, setShowExerciseBrowser] = useState(false);
+  const [exerciseConfiguration, setExerciseConfiguration] = useState(false);
+  const [lastExerciseConfiguration, setLastExerciseConfiguration] = useState(null);
   const [deleteExercise, setDeleteExercise] = useState(null);
   const [deleteDay, setDeleteDay] = useState(null);
 
@@ -73,8 +76,25 @@ export default function RoutineNew({ onCreate }) {
   };
 
   const handleConfigExercise = (day, exercise, index) => {
-    console.log('handleConfigExercise', day, exercise, index);
+    console.log('handleConfigExercise', exercise);
+    setExerciseConfiguration({day, exercise, index});
   };
+
+  const handleOnCompleteExerciseConfiguration = ({day, exercise, applyToAll, index}) => {
+    console.log('handleOnCompleteExerciseConfiguration', applyToAll);
+    const currentExercises = routineDays[day.name].exercises || [];
+    if(applyToAll) {
+      currentExercises.forEach(e => {
+        e.configuration = exercise.configuration;
+      });
+    } else {
+      currentExercises[index] = exercise;
+    }
+    setLastExerciseConfiguration(exercise.configuration)
+    routineDays[day.name].exercises = currentExercises;
+    setRoutineDays({...routineDays});
+    setExerciseConfiguration(null);
+  }
 
   const handleConfirmDeleteExercise = ({reply, data}) => {
     setDeleteExercise(null);
@@ -93,7 +113,14 @@ export default function RoutineNew({ onCreate }) {
   };
 
   const handleOnSelectExercises = (exercises) => {
-    console.log('handleOnPressExercise', exercises.map(e=>e.name));
+    console.log('handleOnSelectExercises', exercises.map(e=>e.name));
+    exercises.forEach(e => {
+      if(!e.configuration && lastExerciseConfiguration) {
+        e.configuration = lastExerciseConfiguration;
+      }
+    });
+    console.log('handleOnSelectExercises', exercises.map(e=>e.configuration));
+
     setShowExerciseBrowser(false);
     console.log('---------------------------------');
     console.log('currentDay', currentDay);
@@ -134,75 +161,82 @@ export default function RoutineNew({ onCreate }) {
     setRoutineDays({...routineDays});
   };
 
-  console.log('routineDays', routineDays);
+  // console.log('routineDays', routineDays);
+
+  if(showExerciseBrowser)
+  return (
+    <ExerciseBrowser
+      multipleSelection={true}
+      onSelect={handleOnSelectExercises}
+      onCancel={() => setShowExerciseBrowser(false)}
+    />);
+
+  if(exerciseConfiguration) {
+    return (
+    <ExerciseConfiguration
+      exercise={exerciseConfiguration.exercise}
+      onComplete={(newExercise, applyToAll) => handleOnCompleteExerciseConfiguration({...exerciseConfiguration, exercise: newExercise, applyToAll})}
+      onCancel={() => setExerciseConfiguration(null)} />
+    );
+  }
 
   return (
     <View style={styles.container}>
-      {showExerciseBrowser ?
-        <ExerciseBrowser
-          multipleSelection={true}
-          onSelect={handleOnSelectExercises}
-          onCancel={() => setShowExerciseBrowser(false)}
-        />
-        : 
-        <>
-          <TextInputCustom
-            style={{margin: 15}}
-            onChangeText={(text) => setRoutineName(text)}
-            value={routineName}
-            placeholderTextColor={styles.placeholderText}
-            placeholder={translate('routineName')}
-          />
-          {
-            (deleteExercise != null) &&
-            <ModalConfirm
-              title={translate('deleteExerciseMsgTitle')}
-              message={translate(deleteExercise?.day.exercises[deleteExercise?.index].name) + `\n` +
-                       translate('deleteExerciseMsgExerciseNumber') + Number(deleteExercise?.index + 1) + `\n` +
-                       translate('deleteExerciseMsgDay') + deleteExercise?.day?.name}
-              data={deleteExercise}
-              onAccept={(e) => handleConfirmDeleteExercise(e)}
-              onCancel={(e) => setDeleteExercise(null)} />
-          }
-          {
-            (deleteDay != null) &&
-            <ModalConfirm
-              title={translate('deleteDayMsgTitle')}
-              message={`${translate('deleteDayMsgDay')} (${deleteDay?.id}) ${deleteDay?.name}`}
-              data={deleteDay}
-              onAccept={(e) => handleConfirmDeleteDay(e)}
-              onCancel={(e) => setDeleteDay(null)} />
-          }
-          <ScrollView style={{ ...styles.scrollView, height: '80%' }}>
-            {Object.values(routineDays).map((item) => {
-              return (
-                <DayExercisesCard
-                  key={item.id}
-                  day={item}
-                  editable={true}
-                  onPressExercise={handleConfigExercise}
-                  onDeleteDay={() => setDeleteDay(item)}
-                  onAddExercise={handleAddExercise}
-                  onDeleteExercise={(day, index) => setDeleteExercise({day, index})}
-                  onReceiveDragDrop={handleOnReceiveDragDrop}
-                />
-              );
-            })}
-          </ScrollView>
-
-          <Button
-            style={{...styles.buttonSlim, backgroundColor: styles.primary, color: styles.secondary, margin: 10}}
-            styleText={{color: styles.secondary}}
-            title={AddDay}
-            onPress={handleAddDay}
-          />
-          
-          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={handleCreateRoutine}>{translate('create')}</Text>
-            <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={handleDeleteRoutineData}>{translate('clear')}</Text>
-          </View>
-        </>
+      <TextInputCustom
+        style={{margin: 15}}
+        onChangeText={(text) => setRoutineName(text)}
+        value={routineName}
+        placeholderTextColor={styles.placeholderText}
+        placeholder={translate('routineName')}
+      />
+      {
+        (deleteExercise != null) &&
+        <ModalConfirm
+          title={translate('deleteExerciseMsgTitle')}
+          message={translate(deleteExercise?.day.exercises[deleteExercise?.index].name) + `\n` +
+                    translate('deleteExerciseMsgExerciseNumber') + Number(deleteExercise?.index + 1) + `\n` +
+                    translate('deleteExerciseMsgDay') + deleteExercise?.day?.name}
+          data={deleteExercise}
+          onAccept={(e) => handleConfirmDeleteExercise(e)}
+          onCancel={(e) => setDeleteExercise(null)} />
       }
+      {
+        (deleteDay != null) &&
+        <ModalConfirm
+          title={translate('deleteDayMsgTitle')}
+          message={`${translate('deleteDayMsgDay')} (${deleteDay?.id}) ${deleteDay?.name}`}
+          data={deleteDay}
+          onAccept={(e) => handleConfirmDeleteDay(e)}
+          onCancel={(e) => setDeleteDay(null)} />
+      }
+      <ScrollView style={{ ...styles.scrollView, height: '80%' }}>
+        {Object.values(routineDays).map((item) => {
+          return (
+            <DayExercisesCard
+              key={item.id}
+              day={item}
+              editable={true}
+              onPressExercise={(exercise, index) => handleConfigExercise(item, exercise, index)}
+              onDeleteDay={() => setDeleteDay(item)}
+              onAddExercise={handleAddExercise}
+              onDeleteExercise={(day, index) => setDeleteExercise({day, index})}
+              onReceiveDragDrop={handleOnReceiveDragDrop}
+            />
+          );
+        })}
+      </ScrollView>
+
+      <Button
+        style={{...styles.buttonSlim, backgroundColor: styles.primary, color: styles.secondary, margin: 10}}
+        styleText={{color: styles.secondary}}
+        title={AddDay}
+        onPress={handleAddDay}
+      />
+      
+      <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={handleCreateRoutine}>{translate('create')}</Text>
+        <Text style={{...styles.buttonSlim, flex: 1, margin: 10}} onPress={handleDeleteRoutineData}>{translate('clear')}</Text>
       </View>
+    </View>
   );
 }

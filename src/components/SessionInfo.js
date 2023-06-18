@@ -12,7 +12,7 @@ export default function SessionInfo({ info }) {
       <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
         <Text style={{...styles.textBigger, color: styles.primary, flex: 1.5}}></Text>
         <Text style={{...styles.textBigger, color: styles.primary, flex: 1}}>{translate('total')}</Text>
-        <Text style={{...styles.textBigger, color: styles.primary, flex: 1}}>{translate('rest')}</Text>
+        <Text style={{...styles.textBigger, color: styles.primary, flex: 1}}>{translate('restShort')}</Text>
         <Text style={{...styles.textBigger, color: styles.primary, flex: 1}}>{translate('wasted')}</Text>
       </View>
       <View style={{flexDirection: 'row', justifyContent:'space-between'}}>

@@ -42,6 +42,7 @@ export const translations = {
     routines: 'Routines',
     favorites: 'Favorites',
     all: 'All',
+    configuration: 'Configuration',
 
     routineName: 'Routine name',
 
@@ -95,6 +96,10 @@ export const translations = {
     duration: 'Duration',
     durationShort: 'Dur.',
     restShort: 'Rest',
+    effort: 'Effort',
+    weightType: 'Weight type',
+    breakdown: 'Breakdown',
+    applyToAll: 'Apply to all',
 
     // // Body zones
     // 'Upper Legs': 'Upper Legs',
@@ -194,6 +199,7 @@ export const translations = {
     routines: 'Rutinas',
     favorites: 'Favoritos',
     all: 'Todo',
+    configuration: 'Configuración',
 
     routineName: 'Nombre de la rutina',
 
@@ -220,7 +226,7 @@ export const translations = {
     minutes: 'Minutos',
     seconds: 'Segundos',
     time: 'Tiempo',
-    rest: 'Desc',
+    rest: 'Descanso',
     wasted: 'Perd',
     weight: 'Peso',
     rir: 'RIR',
@@ -247,6 +253,10 @@ export const translations = {
     duration: 'Duración',
     durationShort: 'Dur.',
     restShort: 'Desc.',
+    effort: 'Esfuerzo',
+    weightType: 'Tipo de peso',
+    breakdown: 'Desglose',
+    applyToAll: 'Aplicar a todos',
 
     // // Body zones
     // 'Upper Legs': 'Muslos',

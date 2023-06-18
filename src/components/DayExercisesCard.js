@@ -68,9 +68,9 @@ const DayExercisesCard = ({
     }
   };
 
-  const handleOnPressExercise = (exercise) => {
+  const handleOnPressExercise = (exercise, index) => {
     if(onPressExercise) {
-      onPressExercise(exercise);
+      onPressExercise(exercise, index);
     }
   };
 
@@ -83,14 +83,26 @@ const DayExercisesCard = ({
 
   console.log('DayExercisesCard', day);
   const dayExercisesItems = day.exercises?.map((exercise, index) => {
+    const conf = exercise?.configuration;
+    const ExerciseConfiguration = (
+      <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+        <Text style={{...styles.text, marginRight: 5}}>{conf?.sets ?? 0}</Text>
+        <Text style={{...styles.text, marginRight: 5}}>x</Text>
+        <Text style={{...styles.text, marginRight: 5}}>{conf?.executionCountType === 'time' ? `${conf?.executionTime ?? 0}s` : conf?.reps ?? 0}</Text>
+        <Text style={{...styles.text, marginRight: 5}}>@</Text>
+        <Text style={{...styles.text, marginRight: 30}}>{`${conf?.effortType ?? 'RIR'}: ${conf?.effort ?? (conf?.effortType === 'RPE' ? 10 : 0)}`}</Text>
+        <Text style={{...styles.text}}>{`${translate('restShort').toUpperCase()}: `}{conf?.restAlarm ?? 0}{'s'}</Text>
+      </View>
+    );
     {/* TODO AGREGAR INFO DEL EJERCICIO, SI NO ES EDITABLE */}
     const ExerciseItem = (
         <ExerciseCard 
           key={exercise.id + index + nanoid()}
           exercise={exercise}
           styleText={{...styles.textBigger, color: styles.secondary}}
-          description={`${translate(exercise.mainMuscles)}\n${translate(exercise.secondaryMuscles)}`}
-          onPress={handleOnPressExercise}
+          // description={`${translate(exercise.mainMuscles)}\n${translate(exercise.secondaryMuscles)}`}
+          description={ExerciseConfiguration}
+          onPress={() => handleOnPressExercise(exercise, index)}
           enableSwipe={['left']}
           // selectable={true}
           onSelect={() => console.log('onSelect')}

@@ -41,7 +41,6 @@ const ExerciseCard = ({
   }, [selected]);
 
   const handleOnPress = (exercise) => {
-    console.log('handleOnPress');
     if(onPress) onPress(exercise);
   };
 
@@ -67,12 +66,17 @@ const ExerciseCard = ({
     <View>
       <SwipableView
         style={{
-          flex: 1,
+          // flex: 1,
           flexDirection: 'row',
           justifyContent: 'space-between',
-          marginTop: 5,
-          marginBottom: 5,
+          // marginTop: 5,
+          // marginBottom: 5,
+          paddingTop: 10,
+          paddingBottom: 10,
+          paddingLeft: 10,
+          paddingRight: 10,
           backgroundColor: styles.primary,
+          borderRadius: 10,
           zIndex: 10,
           ...styleContainer
         }}
@@ -117,9 +121,11 @@ const ExerciseCard = ({
           </TouchableOpacity>
         }
       </SwipableView>
+      {enableSwipe.length > 0 &&
       <View style={{position: 'absolute', right: 10, top: '15%', flex: 1, justifyContent: 'center', alignItems: 'center', zIndex: 0}}>
         <Icon name='delete' color={styles.error.color} size={25} />
       </View>
+      }
     </View>
   );
 };
