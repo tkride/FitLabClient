@@ -37,7 +37,7 @@ const ExerciseConfiguration = ({ exercise, onComplete, onCancel }) => {
       // setBarbellWeight(config?.barbellWeight ?? '20');
       setEffortType(exercise?.effortType ?? 'RIR');
       setEffort(config?.effort ?? '0');
-      setRestAlarm(config?.rest ?? '0');
+      setRestAlarm(config?.restAlarm ?? '0');
       setExecutionTimeLimit(config?.executionTimeLimit ?? '0');
       setApplyToAll(config?.applyToAll ?? false);
     }
@@ -175,8 +175,7 @@ const ExerciseConfiguration = ({ exercise, onComplete, onCancel }) => {
 
 export default ExerciseConfiguration;
 
-// TODO EL DESGLOSE ES UNA FORMA DE PRESENTAR LOS DATOS DURANTE EL REGISTRO DE ENTRENAMIENTO, NO ES UNA FORMA DE GUARDAR LOS DATOS.
-// TODO TAMBIÉN ES UNA FORMA DE PRESENTAR LOS DATOS EN EL HISTORIAL DE ENTRENAMIENTO (SESIONES).
+// TODO EL DESGLOSE ES UNA FORMA DE PRESENTAR LOS DATOS DURANTE EL REGISTRO DE ENTRENAMIENTO O EN EL HISTÓRICO DE SESIONES, NO ES UNA FORMA DE GUARDAR LOS DATOS.
 /*
         <View
           style={{

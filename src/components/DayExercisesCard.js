@@ -14,6 +14,7 @@ import TextEditable from './Text/TextEditable';
 const DayExercisesCard = ({
   day,
   editable=false,
+  onChangeDayName,
   onPressExercise,
   onDeleteDay,
   onAddExercise,
@@ -26,19 +27,15 @@ const DayExercisesCard = ({
   const { translate } = useTranslator();
   const { nanoid } = useData();
 
-  const stylesInner = {
-    exerciseCard: {
-      flexDirection: 'row',
-      height: 75,
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      zIndex: 10,
-      backgroundColor: styles.primary,
-    },
-  };  
-
   useEffect(() => {
   }, [day]);
+
+  const handleOnChangeDayName = (name) => {
+    console.log('handleOnChangeDayName', name);
+    if(onChangeDayName) {
+      onChangeDayName(name);
+    }
+  };
 
   const handleDeleteDay = (day) => {
     console.log('handleDeleteDay', day);
@@ -117,7 +114,11 @@ const DayExercisesCard = ({
       <Card.Content>
         <>
           <View style={{ flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between' }}>
-            <TextEditable style={{ ...styles.textBigger, color: styles.secondary, flex: 1 }} text={day.name} />
+            <TextEditable
+              style={{ ...styles.textBigger, color: styles.secondary, flex: 1 }}
+              text={day.name}
+              onSave={handleOnChangeDayName}
+            />
             {editable &&
             <Button
               style={{ ...styles.buttonSlim, backgroundColor: styles.primary, flex: 0 }}

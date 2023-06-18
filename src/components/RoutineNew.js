@@ -54,6 +54,15 @@ export default function RoutineNew({ onCreate }) {
     setRoutineDays({...routineDays, [newDay.name]: newDay});
   };
 
+  const handleOnChangeDayName = (day, name) => {
+    console.log('handleOnChangeDayName', day, name);
+    const currentDays = {...routineDays};
+    currentDays[name] = {...currentDays[day.name]};
+    currentDays[name].name = name;
+    delete currentDays[day.name];
+    setRoutineDays({...currentDays});
+  };
+
   const handleConfirmDeleteDay = ({reply, data}) => {
     setDeleteDay(null);
     console.log('handleConfirmDeleteDay', reply, data);
@@ -82,7 +91,7 @@ export default function RoutineNew({ onCreate }) {
 
   const handleOnCompleteExerciseConfiguration = ({day, exercise, applyToAll, index}) => {
     console.log('handleOnCompleteExerciseConfiguration', applyToAll);
-    const currentExercises = routineDays[day.name].exercises || [];
+    const currentExercises = routineDays[day.name]?.exercises || [];
     if(applyToAll) {
       currentExercises.forEach(e => {
         e.configuration = exercise.configuration;
@@ -98,7 +107,7 @@ export default function RoutineNew({ onCreate }) {
 
   const handleConfirmDeleteExercise = ({reply, data}) => {
     setDeleteExercise(null);
-    console.log('handleExerciseDeletion', reply, data);
+    console.log('handleConfirmDeleteExercise', reply, data);
     if(reply) {
       const {day, index} = data;
       handleDeleteExercise(day, index);
@@ -216,6 +225,7 @@ export default function RoutineNew({ onCreate }) {
               key={item.id}
               day={item}
               editable={true}
+              onChangeDayName={(name) => handleOnChangeDayName(item, name)}
               onPressExercise={(exercise, index) => handleConfigExercise(item, exercise, index)}
               onDeleteDay={() => setDeleteDay(item)}
               onAddExercise={handleAddExercise}
