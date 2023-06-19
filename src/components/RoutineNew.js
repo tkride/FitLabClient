@@ -124,8 +124,21 @@ export default function RoutineNew({ onCreate }) {
   const handleOnSelectExercises = (exercises) => {
     console.log('handleOnSelectExercises', exercises.map(e=>e.name));
     exercises.forEach(e => {
-      if(!e.configuration && lastExerciseConfiguration) {
-        e.configuration = lastExerciseConfiguration;
+      if(!e.configuration) {
+        if(lastExerciseConfiguration) {
+          e.configuration = lastExerciseConfiguration;
+        }
+        else {
+          e.configuration = {
+            sets: '0',
+            reps: '0',
+            effortType: 'RIR',
+            effort: '0',
+            executionTimeLimit: '0',
+            restAlarm: '0',
+            // tempo: '2-0-2', // TODO: AGREGAR TEMPO A CONFIGURACION
+          }
+        }
       }
     });
     console.log('handleOnSelectExercises', exercises.map(e=>e.configuration));
@@ -230,6 +243,8 @@ export default function RoutineNew({ onCreate }) {
               onDeleteDay={() => setDeleteDay(item)}
               onAddExercise={handleAddExercise}
               onDeleteExercise={(day, index) => setDeleteExercise({day, index})}
+              // onApplyToAll={(exercise, index) => handleOnCompleteExerciseConfiguration(item, exercise, index)}
+              onApplyToAll={(exercise, index) => handleOnCompleteExerciseConfiguration({...{day: item, index}, exercise, applyToAll: true})}
               onReceiveDragDrop={handleOnReceiveDragDrop}
             />
           );

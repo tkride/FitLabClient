@@ -1,15 +1,14 @@
 import React, { useRef } from 'react';
 import { Animated, PanResponder } from 'react-native';
-import { useTheme } from '../context/ThemeProvider';
-import { useTranslator } from '../context/TranslatorProvider';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 const SwipableView = ({
   style,
   onSwipeStart,
   onSwipe,
   onSwipeEnd,
-  enableSwipe=['left', 'right', 'up', 'down'],
+  enableSwipe=[],
   enableFreeSwipe=false,
   children,
   panResponder,
@@ -39,9 +38,6 @@ const SwipableView = ({
   const enableUp = enableSwipe.includes('up');
   const enableDown = enableSwipe.includes('down');
 
-  const { styles } = useTheme();
-  const { translate } = useTranslator();
-  const [image, setImage] = useState({});
   const [swipeDirection, setSwipeDirection] = useState(null);
   const [swipeSense, setSwipeSense] = useState(null);
   let moveDirection = null;
@@ -71,15 +67,17 @@ const SwipableView = ({
             moveSense = (moveDirection === SWIPE_HORIZONTAL) ?
               (gestureState.dx < 0 ? SWIPE_LEFT : SWIPE_RIGHT) :
               (gestureState.dy < 0 ? SWIPE_UP : SWIPE_DOWN);
+            setSwipeSense(moveSense);
           }
-        }
-        if(onSwipe) {
-          onSwipe({
-            direction: DIRECTION_STRING[moveDirection],
-            sense: SENSE_STRING[moveSense],
-            dx: pan.x.__getValue(),
-            dy: pan.y.__getValue(),
-            children });
+          
+          if(onSwipe) {
+            onSwipe({
+              direction: DIRECTION_STRING[moveDirection],
+              sense: SENSE_STRING[moveSense],
+              dx: pan.x.__getValue(),
+              dy: pan.y.__getValue(),
+              children });
+          }
         }
 
         Animated.event([null, { dx: pan.x, dy: pan.y }], {
@@ -126,13 +124,17 @@ const SwipableView = ({
       case SWIPE_VERTICAL:
         return [{ translateY: clipy }];
       default:
-        return [{ translateX: pan.x }, { translateY: pan.y }];
+        // return [{ translateX: pan.x }, { translateY: pan.y }];
+        return [{ translateX: 0 }, { translateY: 0 }];
     }
   };
 
+  useEffect(() => {
+  }, [style]);
+
   return (
     <Animated.View
-      style={{ ...style, transform: getTransform(swipeDirection) }}
+      style={{ transform: getTransform(swipeDirection), ...style }}
         {..._panResponder.panHandlers}
         {...props}
     >

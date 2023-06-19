@@ -42,7 +42,7 @@ export default function RoutinesViewerTabs() {
             initialParams={{ favorite: false }}
             options={{
               tabBarIcon: ({ color }) => (
-                <Icon name="all-inclusive" size={ICON_SIZE} color={color} />
+                <Icon name='all-inclusive' size={ICON_SIZE} color={color} />
               ),
               tabBarLabel: () => null,
             }}

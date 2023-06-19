@@ -19,9 +19,11 @@ const DayExercisesCard = ({
   onDeleteDay,
   onAddExercise,
   onDeleteExercise,
+  onApplyToAll,
   onReceiveDragDrop
 }) => {
   const DELETE_DRAG_THRESHOLD = 40;
+  const APPLY_TO_ALL_DRAG_THRESHOLD = 40;
 
   const { styles } = useTheme();
   const { translate } = useTranslator();
@@ -57,17 +59,27 @@ const DayExercisesCard = ({
   }
 
   const handleOnSwipe = (event, day, index) => {
-    console.log('handleOnSwipe');
-    if(event.direction === 'horizontal' &&
-       event.sense === 'left' &&
-       Math.abs(event.dx) > DELETE_DRAG_THRESHOLD) {
-      handleDeleteExercise(day, index);
+    if(event.direction === 'horizontal') {
+       if(event.sense === 'left' &&
+        Math.abs(event.dx) > DELETE_DRAG_THRESHOLD) {
+          handleDeleteExercise(day, index);
+       }
+       else if(event.sense === 'right' &&
+        Math.abs(event.dx) > APPLY_TO_ALL_DRAG_THRESHOLD) {
+          handleApplyToAll(day?.exercises[index], index);
+       }
     }
   };
 
   const handleOnPressExercise = (exercise, index) => {
     if(onPressExercise) {
       onPressExercise(exercise, index);
+    }
+  };
+
+  const handleApplyToAll = (exercise, index) => {
+    if(onApplyToAll) {
+      onApplyToAll(exercise, index);
     }
   };
 
@@ -100,7 +112,7 @@ const DayExercisesCard = ({
           // description={`${translate(exercise.mainMuscles)}\n${translate(exercise.secondaryMuscles)}`}
           description={ExerciseConfiguration}
           onPress={() => handleOnPressExercise(exercise, index)}
-          enableSwipe={['left']}
+          enableSwipe={['left', 'right', 'up', 'down']}
           // selectable={true}
           onSelect={() => console.log('onSelect')}
           onSwipeEnd={(e) => handleOnSwipe(e, day, index)} />
