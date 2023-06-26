@@ -7,7 +7,7 @@ import { TableCustom } from './TableCustom';
 import { useTheme } from '../context/ThemeProvider';
 import { useData } from '../context/DataProvider';
 import { TouchableHighlight, TouchableOpacity } from 'react-native';
-import Draggable from 'react-native-draggable';
+// import Draggable from 'react-native-draggable';
 import BackButton from './BackButton';
 import Config from '../config/Config';
 import { useTranslator } from '../context/TranslatorProvider';

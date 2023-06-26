@@ -7,7 +7,7 @@ import { useTheme } from '../context/ThemeProvider';
 import { useTranslator } from '../context/TranslatorProvider';
 import { useData } from '../context/DataProvider';
 import { TouchableOpacity } from 'react-native';
-import Draggable from 'react-native-draggable';
+// import Draggable from 'react-native-draggable';
 import Config from '../config/Config';
 import ImageSequence from './ImageSequence';
 

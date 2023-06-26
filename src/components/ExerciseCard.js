@@ -145,7 +145,10 @@ const ExerciseCard = ({
         borderBottomRightRadius: 10,
         backgroundColor: styles.error.color}}>
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end'}}>
-            <Icon name='delete' color={styles.primary} size={30} />
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', margin: 1}}>
+              <Icon name='delete' color={styles.primary} size={30} />
+              <Text style={{...styles.text, fontSize: 11, color: styles.primary}}>{translate('delete')}</Text>
+            </View>
           </View>
       </View>
       }

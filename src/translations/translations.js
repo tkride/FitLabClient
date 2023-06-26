@@ -51,7 +51,7 @@ export const translations = {
     target: 'Target',
     targetedMuscles: 'Targeted muscles',
 
-    welcomeMessage: 'Welcome!',
+    welcomeMessage: 'Welcome to FitLab!',
     homeScreen: 'Home',
     aboutScreen: 'About',
 
@@ -208,7 +208,7 @@ export const translations = {
     target: 'Objetivo',
     targetedMuscles: 'Músculos objetivo',
 
-    welcomeMessage: '¡Bienvenido!',
+    welcomeMessage: '¡Bienvenido a FitLab!',
     homeScreen: 'Inicio',
     aboutScreen: 'Acerca de',
 

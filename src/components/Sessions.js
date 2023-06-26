@@ -92,6 +92,8 @@ export default function Sessions({ navigation }) {
             foldSymbol={<Icon type='entypo' name='chevron-up' />}
             unfoldSymbol={<Icon type='entypo' name='chevron-down' />}
             expandedDefault={true}
+            styleContainer={{backgroundColor: styles.backMain}}
+            styleHeader={{backgroundColor: styles.secondary}}
             title={
               <View style={{flexDirection: 'row'}}>
                 <Text style={{...styles.subtitle, color: styles.primary, flex: 1}}>{toLocaleString(new Date(session.info.startTime*1000)).split(' ')?.[1]}</Text>

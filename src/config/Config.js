@@ -1,5 +1,5 @@
 
-const BASE_URL = 'http://192.168.1.131:5000/v1';
+const BASE_URL = 'http://192.168.1.132:5000/v1';
 
 const Config = {
   REQUESTS: {

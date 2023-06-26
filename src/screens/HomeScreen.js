@@ -8,6 +8,7 @@ import { useTheme } from '../context/ThemeProvider';
 import BackButton from '../Components/BackButton';
 import { Avatar } from 'react-native-paper';
 import Config from '../config/Config';
+import { useTranslator } from '../context/TranslatorProvider';
 import { requestImage } from '../Services/api';
 import { Image } from '@rneui/themed';
 import ExerciseBrowser from '../Components/ExerciseBrowser';
@@ -15,12 +16,12 @@ import ModalConfirm from '../Components/Text/ModalConfirm';
 
 export default function HomeScreen() {
   const { styles } = useTheme();
+  const { translate } = useTranslator();
 
   return (
     <SafeAreaView style={ styles.container }>
       <View style={styles.view}>
-        <Text style={styles.title} onPress={() => setShowModal(true)}>Bienvenido a Fit Lab</Text>
-        <Text style={styles.subtitle}>Tu entrenador personal</Text>
+        <Text style={styles.title} onPress={() => setShowModal(true)}>{translate('welcomeMessage')}</Text>
       </View>
       {/* <ExerciseBrowser /> */}
       {/* <TableCustom /> */}

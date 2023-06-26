@@ -7,7 +7,6 @@ import { Icon } from '@rneui/base';
 import ExerciseCard from './ExerciseCard';
 import Button from './Button';
 // import { DraxProvider, DraxView } from 'react-native-drax';
-import { Card } from 'react-native-paper';
 import TextEditable from './Text/TextEditable';
 
 
@@ -91,7 +90,7 @@ const DayExercisesCard = ({
   );
 
   console.log('DayExercisesCard', day);
-  const dayExercisesItems = day.exercises?.map((exercise, index) => {
+  const DayExercisesItems = day.exercises?.map((exercise, index) => {
     const conf = exercise?.configuration;
     const ExerciseConfiguration = (
       <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -122,34 +121,30 @@ const DayExercisesCard = ({
   });
 
   return (
-    <Card key={day.id} style={styles.card}>
-      <Card.Content>
-        <>
-          <View style={{ flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between' }}>
-            <TextEditable
-              style={{ ...styles.textBigger, color: styles.secondary, flex: 1 }}
-              text={day.name}
-              onSave={handleOnChangeDayName}
-            />
-            {editable &&
-            <Button
-              style={{ ...styles.buttonSlim, backgroundColor: styles.primary, flex: 0 }}
-              title={<Icon name='close' color={styles.grayHeader} />}
-              onPress={() => handleDeleteDay(day)}
-            />}
-          </View>
+    <View key={day.id} style={styles.card}>
+      <View style={{ flexDirection: 'row', marginBottom: 5, justifyContent: 'space-between' }}>
+        <TextEditable
+          style={{ ...styles.textBigger, color: styles.secondary, flex: 1 }}
+          text={day.name}
+          onSave={handleOnChangeDayName}
+        />
+        {editable &&
+        <Button
+          style={{ ...styles.buttonSlim, backgroundColor: styles.primary, flex: 0 }}
+          title={<Icon name='close' color={styles.grayHeader} />}
+          onPress={() => handleDeleteDay(day)}
+        />}
+      </View>
 
-          {dayExercisesItems}
+      {DayExercisesItems}
 
-          <Button
-            style={{ ...styles.buttonSlim, margin: 10 }}
-            styleText={{ color: styles.primary }}
-            title={addExercise}
-            onPress={() => handleAddExercise(day)}
-          />
-        </>
-      </Card.Content>
-    </Card>
+      <Button
+        style={{ ...styles.buttonSlim, margin: 10 }}
+        styleText={{ color: styles.primary }}
+        title={addExercise}
+        onPress={() => handleAddExercise(day)}
+      />
+    </View>
   );
 };
 

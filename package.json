@@ -34,7 +34,6 @@
     "react": "18.2.0",
     "react-native": "^0.71.8",
     "react-native-calendar-picker": "^7.1.4",
-    "react-native-draggable": "^3.3.0",
     "react-native-draggable-flatlist": "^4.0.1",
     "react-native-drax": "^0.10.3",
     "react-native-fs": "^2.20.0",
