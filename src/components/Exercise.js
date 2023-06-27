@@ -64,12 +64,15 @@ export default function Exercise({ exercise }) {
             <Card.Content>
               <View style={{ flexDirection: 'column', alignItems: 'center', marginBottom: 15 }}>
 
+                {/* Exercise titles */}
                 <View style={{ flexDirection: 'row', marginBottom: 15 }}>
                   <Text style={[styles.textBig, {color: styles.subtitle.color, textAlign: 'center', flex: 1 }]}>{`${translate('exercise')}`}</Text>
                   <Text style={[styles.textBig, { color: styles.subtitle.color, textAlign: 'center', flex: 0.75 }]}>{`${translate('targetedMuscles')}`}</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
+
+                  {/* Exercise image sequence */}
                   {exerciseSteps &&
                     <ImageSequence
                       images={exerciseSteps}
@@ -77,10 +80,13 @@ export default function Exercise({ exercise }) {
                       styleImage={{ flex: 1, height: 200, borderRadius: 10 }}
                       resizeMode={'cover'}
                     />}
+
+                  {/* Exercise targeted muscles */}
                   {targetedMusclesImage &&
                   <Image source={{ uri: targetedMusclesImage }} style={{ flex: 0.75, height: 200, borderRadius: 10, marginLeft: 10, zIndex: 1 }} resizeMode='stretch' />}
                 </View>
 
+                {/* Exercise information */}
                 <View style={{ flexDirection: 'column', flex: 1, alignContent: 'flex-start' }}>
 
                   {exercise.mainMuscles &&

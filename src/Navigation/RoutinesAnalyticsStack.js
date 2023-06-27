@@ -6,10 +6,13 @@ import RoutinesAnalyticsTypesTabs from './RoutinesAnalyticsTypesTabs';
 
 const Stack = createStackNavigator();
 
-export default function RoutinesAnalyticsStack() {
+export default function RoutinesAnalyticsStack({route}) {
+
+  const { filter } = route?.params ?? { filter: {}};
+
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Routines" component={RoutinesAnalyticsListScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Routines" component={RoutinesAnalyticsListScreen} initialParams={{filter: filter}} options={{ headerShown: false }} />
       <Stack.Screen name="AnalyticsTabs" component={RoutinesAnalyticsTypesTabs} options={{ headerShown: false }} />
       {/* <Stack.Screen name="Músculos" component={RoutinesViewerDaysExercisesScreen} options={{ headerShown: false }} /> */}
       {/* <Stack.Screen name="Días" component={AnalyticsRoutineScreen} options={{ headerShown: false }} /> */}

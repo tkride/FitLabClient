@@ -1,0 +1,44 @@
+// ESPAÑOL: Describe el esquema de navegación con representación de líneas ASCII
+// para una mejor comprensión de la estructura de navegación de la app.
+// ENGLISH: Describes the navigation schema with ASCII lines representation
+// for a better understanding of the app navigation structure.
+//
+// ┌── [ LoginScreen ]
+// ├── [ HomeTabs ]
+// │    ├── [ HomeScreen ] (// TODO: SHOW SESSION ANALYTICS)
+// │    ├── [ WorkoutTabs ] (// TODO: PERFORM WORKOUT)
+// │    ├── [ SessionsScreen ]
+// │    ├── [ RoutinesTabs ]
+// │    │    ├── [ RoutinesViewerTabs ]
+// │    │    │    ├── [ RoutinesViewerStack ] (favorites)
+// │    │    │    │    ├── [ RoutinesViewerListScreen ]
+// │    │    │    │    ├── [ RoutinesViewerDaysScreen ]
+// │    │    │    │    ├── [ RoutinesViewerDaysExercisesScreen ]
+// │    │    │    │    ├── [ RoutinesViewerExerciseScreen ]
+// │    │    │    ├── [ RoutinesViewerStack ] (all)
+// │    │    │    │    ├── [ RoutinesViewerListScreen ]
+// │    │    │    │    ├── [ RoutinesViewerDaysScreen ]
+// │    │    │    │    ├── [ RoutinesViewerDaysExercisesScreen ]
+// │    │    │    │    ├── [ RoutinesViewerExerciseScreen ]
+// │    │    ├── [ RoutinesAnalyticsTabs ]
+// │    │    │    ├── [ RoutinesAnalyticsStack ] (favorites)
+// │    │    │    │    ├── [ RoutinesAnalyticsListScreen ]
+// │    │    │    │    ├── [ RoutinesAnalyticsTypesTabs ]
+// │    │    │    │    │    ├── [ RoutinesAnalyticsZonesMusclesScreen ] (// TODO)
+// │    │    │    │    │    ├── [ RoutinesAnalyticsMusclesScreen ]
+// │    │    │    │    │    ├── [ RoutinesAnalyticsDaysScreen ] (// TODO)
+// │    │    │    ├── [ RoutinesAnalyticsStack ] (all)
+// │    │    │    │    ├── [ RoutinesAnalyticsListScreen ]
+// │    │    │    │    ├── [ RoutinesAnalyticsTypesTabs ]
+// │    │    │    │    │    ├── [ RoutinesAnalyticsZonesMusclesScreen ] (// TODO)
+// │    │    │    │    │    ├── [ RoutinesAnalyticsMusclesScreen ]
+// │    │    │    │    │    ├── [ RoutinesAnalyticsDaysScreen ] (// TODO)
+// │    │    ├── [ CreateRoutineScreen ]
+// │    ├── [ UserScreen ]
+// │    ├── [ SettingsScreen ]
+// │    ├── [ AboutScreen ]
+// │    ├── [ HelpScreen ]
+// │    ├── [ FeedbackScreen ]
+// │    ├── [ PrivacyPolicyScreen ]
+// │    ├── [ TermsAndConditionsScreen ]
+// │    ├── [ RegisterScreen ]

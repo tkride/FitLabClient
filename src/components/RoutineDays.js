@@ -11,6 +11,7 @@ import { TouchableHighlight, TouchableOpacity } from 'react-native';
 import BackButton from './BackButton';
 import Config from '../config/Config';
 import { useTranslator } from '../context/TranslatorProvider';
+import ExerciseCard from './ExerciseCard';
 
 export default function RoutineDays({ onPress, routine }) {
   const { styles } = useTheme();
@@ -64,18 +65,23 @@ export default function RoutineDays({ onPress, routine }) {
     <View style={styles.view} shouldRasterizeIOS={true} renderToHardwareTextureAndroid={true}>
       {/* <Text style={styles.title}>{routineData.name}</Text> */}
       <ScrollView style={{...styles.scrollView, height: '80%'}}>
+        
+        {/* Routine days cards */}
         {routineData?.days?.map(day => (
           <TouchableOpacity key={day.name + nanoid()} onPress={() => handleSelect(day)}>
             <Card style={[styles.card]}>
               <Card.Content style={{marginBottom: 5}}>
+                {/* Day information */}
                 <Text style={{...styles.title}}>{day.name}</Text>
                 <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-between'}}>
                   <Text style={{...styles.textBig}}>{`${translate('exercises')}: ${day.exercises.length}`}</Text>
                   <Text style={{...styles.textBig, marginLeft: 10}}>{`${translate('duration')}: ${calcDuration(day)} ${translate('minutes')}`}</Text>
                 </View>
                 <View style={{marginTop: 10}}>
+                  {/* Exercises */}
                   {day?.exercises?.map(exercise => (
-                      <Text key={exercise.name + nanoid()} style={{...styles.subtitle, fontSize: styles.textBig.fontSize }}>{exercise.name}</Text>
+                      <ExerciseCard key={exercise.name + nanoid()} exercise={exercise} />
+                      // <Text key={exercise.name + nanoid()} style={{...styles.subtitle, fontSize: styles.textBig.fontSize }}>{exercise.name}</Text>
                   ))}
                 </View>
               </Card.Content>

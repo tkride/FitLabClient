@@ -5,9 +5,10 @@ import { useTheme } from '../context/ThemeProvider';
 import { useData } from '../context/DataProvider';
 import RoutineBrowser from '../Components/RoutineBrowser';
 
-export default function RoutinesAnalyticsListScreen({ navigation }) {
+export default function RoutinesAnalyticsListScreen({ navigation, route }) {
   const { styles } = useTheme();
   const { routines } = useData();
+  const { filter } = route?.params ?? {filter: {}};
 
   handleOnSelectRoutine = (routines) => {
     console.log('handleOnSelectRoutine', routines);
@@ -16,7 +17,12 @@ export default function RoutinesAnalyticsListScreen({ navigation }) {
   
   return (
     <View style={styles.container}>
-      <RoutineBrowser onSelect={handleOnSelectRoutine} />
+      <RoutineBrowser
+        showFavorites={true}
+        // filter={favorite ? {favorite} : {}}
+        filter={{filter}}
+        onSelect={handleOnSelectRoutine}
+      />
     </View>
   );
 }

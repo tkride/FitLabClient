@@ -1,17 +1,11 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import RoutinesViewerStack from './RoutinesViewerStack';
 import CreateRoutineScreen from '../Screens/RoutineCreateSreen';
-// import AnalyzeRoutineScreen from './AnalyzeRoutineScreen';
 import { Icon } from '@rneui/themed';
-import ScreenTitle from '../Components/ScreenTitle';
 import { useTheme } from '../context/ThemeProvider';
 import { useTranslator } from '../context/TranslatorProvider';
-import RoutinesAnalyticsMusclesScreen from '../Screens/RoutinesAnalyticsMusclesScreen';
-import RoutinesAnalyticsStack from './RoutinesAnalyticsStack';
-import RoutinesAnalyticsTypesTabs from './RoutinesAnalyticsTypesTabs';
-import { useEffect } from 'react';
 import RoutinesViewerTabs from './RoutinesViewerTabs';
+import RoutinesAnalyticsTabs from './RoutinesAnalyticsTabs';
 
 const Tab = createMaterialTopTabNavigator();
 const ICON_SIZE = 15;
@@ -22,7 +16,7 @@ export default function RoutinesTabs() {
 
     return (
       <>
-        <Tab.Navigator screenOptions={styles.navigatorTop}>
+        <Tab.Navigator screenOptions={styles.navigatorTop} swipeEnabled={false}>
           <Tab.Screen
             name={`${translate('visualize')}`}
             // component={RoutinesViewerStack}
@@ -35,7 +29,7 @@ export default function RoutinesTabs() {
           />
           <Tab.Screen
             name={`${translate('analyze')}`}
-            component={RoutinesAnalyticsStack}
+            component={RoutinesAnalyticsTabs}
             options={{
               tabBarIcon: ({ color }) => (
                 <Icon name="bar-chart" size={ICON_SIZE} color={color} />

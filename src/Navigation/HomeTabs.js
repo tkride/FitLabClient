@@ -7,9 +7,7 @@ import { useTheme } from '../context/ThemeProvider';
 import { useTranslator } from '../context/TranslatorProvider';
 import React, { useEffect } from 'react';
 import UserScreen from '../Screens/UserScreen';
-// import RoutinesStack from './RoutinesStack';
 import RoutinesTabs from './RoutinesTabs';
-import ScreenTitle from '../Components/ScreenTitle';
 
 const Tab = createBottomTabNavigator();
 
