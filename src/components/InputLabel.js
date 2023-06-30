@@ -33,11 +33,12 @@ const InputLabel = ({ label, value, isNumeric, styleLabel, styleInput, onChange 
     <View style={{flexDirection: 'row'}}>
       {label && <Text style={{...styles.textBigger, ...styleLabel}}>{label}</Text>}
       <TextInput
-        style={[styles.inputLabel, isFocused && {borderBottomWidth: 2}, styleInput]}
+        style={[styles.inputLabel, isFocused && {borderBottomWidth: 2}, {textAlign: 'center'}, styleInput]}
         onChangeText={handleOnChange}
         value={valueInput}
-        onFocus={() => setIsFocused(true)}
+        onFocus={(e) => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
+        selectTextOnFocus={true}
         keyboardType={isNumeric ? 'numeric' : 'default'}
       />
     </View>

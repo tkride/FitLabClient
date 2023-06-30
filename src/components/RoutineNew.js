@@ -185,6 +185,7 @@ export default function RoutineNew({ onCreate }) {
 
   // console.log('routineDays', routineDays);
 
+  console.log('RoutineNew:render');
   if(showExerciseBrowser)
   return (
     <ExerciseBrowser

@@ -9,7 +9,7 @@ import { Avatar } from 'react-native-paper';
 import { Icon } from '@rneui/base';
 import SwipableView from './SwipableView';
 
-const ExerciseCard = ({
+const ExerciseCard = React.memo(({
   styleContainer,
   styleText,
   exercise,
@@ -97,42 +97,51 @@ const ExerciseCard = ({
     </>
   );
 
+  const SelectableIcon = (selectable &&
+  <TouchableOpacity onPress={handleOnSelect}>
+    <View style={{alignItems: 'center', flex: 1}}>
+      <Icon
+        type='ant-design'
+        name={selected ? 'checkcircle' : 'checkcircleo'}
+        color={selected ? styles.secondary : styles.gray} />
+    </View>
+  </TouchableOpacity>);
+
+  const swipableStyle = {
+    flexDirection: 'row',
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: styles.primary,
+    borderRadius: 10,
+    ...styleContainer
+  };
+
   return (
     <View style={{zIndex: zIndexSwipe}}>
       <View style={{zIndex: zIndexSwipe}}>
-        <SwipableView
-          style={{
-            flexDirection: 'row',
-            paddingTop: 10,
-            paddingBottom: 10,
-            backgroundColor: styles.primary,
-            borderRadius: 10,
-            ...styleContainer
-          }}
-          onSwipeStart={handleOnSwipeStart}
-          onSwipe={handleOnSwipe}
-          onSwipeEnd={handleOnSwipeEnd}
-          enableSwipe={enableSwipe}
-          {...props}
-        >
-          {enableSwipe.length > 0 &&
-          <View style={{flexDirection: 'row', width: 25, alignItems: 'center', zIndex: 10}}>
-            <Icon type='material-community' name='drag-vertical-variant' color={styles.grayHeader} size={25} />
-            {/* <Icon type='material-icons' name='drag-indicator' color={styles.grayHeader} size={25} /> */}
+        {enableSwipe.length > 0 ?
+          <SwipableView
+            style={swipableStyle}
+            onSwipeStart={handleOnSwipeStart}
+            onSwipe={handleOnSwipe}
+            onSwipeEnd={handleOnSwipeEnd}
+            enableSwipe={enableSwipe}
+            {...props}
+          >
+            {enableSwipe.length > 0 &&
+            <View style={{flexDirection: 'row', width: 25, alignItems: 'center', zIndex: 10}}>
+              <Icon type='material-community' name='drag-vertical-variant' color={styles.grayHeader} size={25} />
+              {/* <Icon type='material-icons' name='drag-indicator' color={styles.grayHeader} size={25} /> */}
+            </View>}
+            {ExerciseInfo}
+            {SelectableIcon}
+          </SwipableView>
+          :
+          <View style={swipableStyle}>
+            {ExerciseInfo}
+            {SelectableIcon}
           </View>
-          }
-          {ExerciseInfo}
-          {selectable &&
-            <TouchableOpacity onPress={handleOnSelect}>
-              <View style={{alignItems: 'center', flex: 1}}>
-                <Icon
-                  type='ant-design'
-                  name={selected ? 'checkcircle' : 'checkcircleo'}
-                  color={selected ? styles.secondary : styles.gray} />
-              </View>
-            </TouchableOpacity>
-          }
-        </SwipableView>
+        }
       </View>
       {enableSwipe.length > 0 && swipeDirection === 'horizontal' && swipeSense === 'left' &&
       <View style={{
@@ -187,6 +196,6 @@ const ExerciseCard = ({
       }
     </View>
   );
-};
+});
 
 export default ExerciseCard;

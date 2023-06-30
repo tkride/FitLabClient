@@ -16,7 +16,7 @@ export default function RoutinesTabs() {
 
     return (
       <>
-        <Tab.Navigator screenOptions={styles.navigatorTop} swipeEnabled={false}>
+        <Tab.Navigator screenOptions={{...styles.navigatorTop, swipeEnabled: false}}>
           <Tab.Screen
             name={`${translate('visualize')}`}
             // component={RoutinesViewerStack}

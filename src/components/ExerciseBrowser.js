@@ -1,7 +1,7 @@
 // ExerciseBrowser.js
 
 import React, { useState, useEffect } from 'react';
-import { View, FlatList, TouchableOpacity, Text } from 'react-native';
+import { ScrollView, View, TouchableOpacity, Text } from 'react-native';
 import Config from '../config/Config';
 import { useTheme } from '../context/ThemeProvider';
 import { useTranslator } from '../context/TranslatorProvider';
@@ -29,23 +29,28 @@ export default function ExerciseBrowser({ onSelect, onCancel, multipleSelection=
   const [selected, setSelected] = useState(selectedExercises);
   const [onlySelectedMarked, setOnlySelectedMarked] = useState(false);
 
+  // let selected = [];
+  // const setSelected = (se) => {
+  //   console.log('ExerciseBrowser COMPONENT: setSelected', se);
+  //   selected = se;
+  // };
+
   useEffect(() => {
     setFilteredExercises(exercises);
   }, [exercises]);
 
-  useEffect(() => {
-    const loadedImages = {};
-    const exerciseImages = filteredExercises || exercises;
-    // console.log('BROWSER: ', exercises);
-    exerciseImages.forEach(exercise => {
-      const exerciseName = exercise?.name;
-      const fileName = exerciseName?.toLowerCase().replace(/\s/g, '-') + Config.IMAGES.EXERCISE_STEP_1_FILE_APPEND;
-      const filePath = Config.REQUESTS.IMAGES_EXERCISE_STEPS + '/' + fileName;
-      loadedImages[exerciseName] = { uri: filePath };
-    });
-    setImages(loadedImages);
-    // console.log({filteredExercises});
-  }, [exercises, filteredExercises]);
+  // useEffect(() => {
+  //   const loadedImages = {};
+  //   const exerciseImages = filteredExercises || exercises;
+  //   exerciseImages.forEach(exercise => {
+  //     const exerciseName = exercise?.name;
+  //     const fileName = exerciseName?.toLowerCase().replace(/\s/g, '-') + Config.IMAGES.EXERCISE_STEP_1_FILE_APPEND;
+  //     const filePath = Config.REQUESTS.IMAGES_EXERCISE_STEPS + '/' + fileName;
+  //     loadedImages[exerciseName] = { uri: filePath };
+  //   });
+  //   setImages(loadedImages);
+  //   console.log({filteredExercises});
+  // }, [exercises, filteredExercises]);
 
   useEffect(() => {
     if (selectedExercises.length > 0) {
@@ -136,7 +141,6 @@ export default function ExerciseBrowser({ onSelect, onCancel, multipleSelection=
   };
 
   const handleOnPressExercise = (exercise) => {
-    // console.log('ExerciseBrowser COMPONENT: handleOnPressExercise: ', selected);
     if(multipleSelection) {
       const index = selected.findIndex(e => e.id === exercise.id);
       if(index >= 0) {
@@ -154,19 +158,15 @@ export default function ExerciseBrowser({ onSelect, onCancel, multipleSelection=
   };
 
   const handleOnSelect = (exercise) => {
-    // console.log('ExerciseBrowser COMPONENT: handleOnSelect: ', exercise);
     const ret = exercise ? [exercise] : selected;
-    // console.log('ExerciseBrowser COMPONENT: handleOnSelect: ', ret);
     if(onSelect) onSelect(ret);
   };
 
   const handleOnCancel = () => {
-    console.log('ExerciseBrowser COMPONENT: handleOnCancel.');
     if(onCancel) onCancel();
   };
 
   const renderItem = ({ item }) => {
-    const ItemTitle = translate(item.name);
 
     const ItemDescription = (
       <View
@@ -185,6 +185,26 @@ export default function ExerciseBrowser({ onSelect, onCancel, multipleSelection=
       </View>
     );
 
+    const newRet = (
+      <ExerciseCard
+        key={item.id+nanoid()}
+        styleContainer={{
+          flexDirection: 'row',
+          flex: 1,
+          justifyContent: 'space-between',
+          marginTop: 15,
+          backgroundColor: styles.mainBack}}
+        styleText={{ ...styles.textBig, color: styles.secondary }}
+        exercise={item}
+        description={ItemDescription}
+        selectable={multipleSelection}
+        isSelected={selected.map(e=>e.id).includes(item.id)}
+        onSelect={() => handleOnPressExercise(item)}
+      /> );
+
+    return newRet;
+
+    const ItemTitle = translate(item.name);
     const oldRet = (
       <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'space-between'}} onPress={() => handleOnPressExercise(item)}>
         <List.Item
@@ -203,32 +223,15 @@ export default function ExerciseBrowser({ onSelect, onCancel, multipleSelection=
             color={selected.map(e=>e.id).includes(item.id) ? styles.secondary : styles.gray} />
         </View>
       </TouchableOpacity> );
-
-      const newRet = (
-      <ExerciseCard
-        key={item.id+nanoid()}
-        styleContainer={{
-          flexDirection: 'row',
-          flex: 1,
-          justifyContent: 'space-between',
-          marginTop: 15,
-          backgroundColor: styles.mainBack}}
-        styleText={{ ...styles.textBig, color: styles.secondary }}
-        exercise={item}
-        description={ItemDescription}
-        selectable={multipleSelection}
-        isSelected={selected.map(e=>e.id).includes(item.id)}
-        onSelect={() => handleOnPressExercise(item)}
-      /> );
-
-    // return oldRet;
-    return newRet;
+    return oldRet;
   };
 
   const handleOnOnlySelected = () => {
     setOnlySelectedMarked(!onlySelectedMarked);
     updateTagsMarked({onlySelected: !onlySelectedMarked});
   };
+
+  console.log('ExerciseBrowser COMPONENT: render');
 
   return (
     <>
@@ -301,9 +304,18 @@ export default function ExerciseBrowser({ onSelect, onCancel, multipleSelection=
       />
       <ScrollableList
         data={filteredExercises}
-        scrollPosition={10}
+        scrollPosition={0}
         renderItem={renderItem}
       />
+      {/* <ScrollView>
+        <View>
+          {console.log('ExercuseBrowser::filteredExercises.length', filteredExercises.length)}
+          {filteredExercises.slice(0, 100).map( (item, i) => {
+            return renderItem({item});
+          } )}
+          {console.log('ExercuseBrowser::filteredExercises end')}
+        </View>
+      </ScrollView> */}
     </View>
     {multipleSelection &&
     <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>

@@ -16,13 +16,13 @@ const ExerciseConfiguration = ({ exercise, onComplete, onCancel }) => {
   const { styles } = useTheme();
   const { translate } = useTranslator();
 
-  const [sets, setSets] = useState(0);
+  const [sets, setSets] = useState(0+'');
   const [executionCountType, setExecutionCountType] = useState('reps'); // 'reps', 'time'
-  const [executionTimeLimit, setExecutionTimeLimit] = useState(0);
-  const [reps, setReps] = useState(0);
+  const [executionTimeLimit, setExecutionTimeLimit] = useState(0+'');
+  const [reps, setReps] = useState(0+'');
   const [effortType, setEffortType] = useState('RIR');
-  const [effort, setEffort] = useState(0);
-  const [restAlarm, setRestAlarm] = useState(0);
+  const [effort, setEffort] = useState(0+'');
+  const [restAlarm, setRestAlarm] = useState(0+'');
   const [applyToAll, setApplyToAll] = useState(false);
   // const [weightType, setWeightType] = useState('total');
   // const [barbellWeight, setBarbellWeight] = useState(0);
